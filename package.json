@@ -1,5 +1,6 @@
 {
-  "name": "with-typescript",
+  "name": "headlessapp.store",
+  "homepage": "https://headlessapp.store",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
