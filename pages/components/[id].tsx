@@ -36,26 +36,15 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
           </p>
         </div>
       </div>
-      <nav className="flex flex-col sm:flex-row border-b border-gray-200 justify-center">
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
-          Variation 1
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Variation 2
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Variation 3
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Variation 4
-        </button>
-      </nav>
-      <main className="bg-gray-50 border-b border-gray-200 px-6">
+      <main className="bg-gray-50 border-b border-t border-gray-200 px-6">
         <div className="p-60 gap-8 text-center">Preview of the component</div>
       </main>
       <nav className="flex flex-col sm:flex-row border-b border-gray-200 justify-center">
         <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
           JSX Lite
+        </button>
+        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+          Builder
         </button>
         <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
           React
@@ -65,6 +54,18 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
         </button>
         <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
           Svelte
+        </button>
+        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+          Solid
+        </button>
+        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+          Angular
+        </button>
+        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+          HTML/CSS/JS
+        </button>
+        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+          Figma
         </button>
       </nav>
       <main className="bg-gray-800 border-b border-gray-200 px-6">
