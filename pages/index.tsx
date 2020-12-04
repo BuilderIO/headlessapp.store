@@ -43,14 +43,6 @@ const IndexPage = () => {
           <p className="mt-3 max-w-md mx-auto text-base text-gray-500 opacity-75 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
             Apps for the <b className="text-blue-600">component</b> generation
           </p>
-          <div className="pt-6 md:pt-10">
-            <a
-              className="relative inline-flex items-center text-center px-3 py-2 rounded-md border border-gray-200 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-black focus:z-10 focus:outline-none active:bg-gray-100 active:text-black transition ease-in-out duration-150"
-              href="/about"
-            >
-              Learn more
-            </a>
-          </div>
         </div>
       </div>
       <main className="bg-gray-800 border-b border-gray-200 px-6">
