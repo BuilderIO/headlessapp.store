@@ -26,7 +26,7 @@ const Navigation = () => {
           </nav>
         </div>
         <div className="hidden md:flex md:items-center md:text-right px-6">
-          <ActiveLink href="/request" activeClassName="text-black">
+          <ActiveLink href="/" activeClassName="text-black">
             <a className="px-3 py-1.5 text-sm rounded bg-gray-100 opacity-75 hover:text-black font-medium inline-flex items-center">
               <svg
                 className="w-5 h-5 fill-current mr-1.5"

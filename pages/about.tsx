@@ -12,9 +12,9 @@ const AboutPage = () => (
         </p>
       </div>
     </div>
-    <main className="bg-gray-50 border-b border-gray-200 px-6">
-      <div className="max-w-5xl mx-auto prose md:prose-lg py-6 md:py-12 lg:py-24">
-        <h2>Foobar</h2>
+    <main className="bg-gray-800 border-b border-gray-200 px-6">
+      <div className="max-w-5xl mx-auto prose md:prose-lg py-6 md:py-12 lg:py-24 text-gray-300">
+        <h2 className="text-gray-500">Foobar</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
           eget sem in diam varius iaculis in non ante. Cras ante enim, vehicula

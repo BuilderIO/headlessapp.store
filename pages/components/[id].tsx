@@ -26,20 +26,10 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
         item ? item.name : "User Detail"
       } | Next.js + TypeScript Example`}
     >
-      <div className="p-12 bg-white shadow-sm">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-5xl md:text-6xl tracking-tight font-extrabold leading-tight text-transparent bg-gradient-to-r from-red-600 via-indigo-600 to-purple-700 bg-clip-text">
-            Awesome component
-          </h2>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 opacity-75 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Lorem ipsum dolor kismet
-          </p>
-        </div>
-      </div>
-      <main className="bg-gray-50 border-b border-t border-gray-200 px-6">
+      <main className="bg-gray-50 border-b border-t border-gray-200 px-6 mt-8">
         <div className="p-60 gap-8 text-center">Preview of the component</div>
       </main>
-      <nav className="flex flex-col sm:flex-row border-b border-gray-200 justify-center">
+      <nav className="flex flex-col sm:flex-row border-b border-gray-200  overflow-auto lg:justify-center">
         <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
           JSX Lite
         </button>
