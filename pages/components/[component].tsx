@@ -93,11 +93,7 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
   }
 
   return (
-    <Layout
-      title={`${
-        item ? item.name : "User Detail"
-      } | Next.js + TypeScript Example`}
-    >
+    <Layout title="What a cool component">
       <style>{`
         .monaco-editor .margin, .monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input {
           background-color: transparent !important;

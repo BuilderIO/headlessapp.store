@@ -34,7 +34,7 @@ const GridItem = () => {
 
 const IndexPage = () => {
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title="Home">
       <div className="p-6 py-12 md:py-32 lg:py-36 bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl sm:text-5xl md:text-6xl tracking-tight font-extrabold leading-tight text-transparent bg-gradient-to-r from-teal-500 via-blue-600 to-purple-600 bg-clip-text">
