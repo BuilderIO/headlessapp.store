@@ -45,7 +45,7 @@ const IndexPage = () => {
           </p>
         </div>
       </div>
-      <main className="bg-gray-800 px-6">
+      <main className="bg-gray-900 px-6">
         <div className="py-8 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
           {Array.from({ length: 10 }).map((_, i) => (
             <GridItem key={i} />

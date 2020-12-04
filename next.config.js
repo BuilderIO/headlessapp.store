@@ -1,6 +1,10 @@
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const withPlugins = require("next-compose-plugins");
+const withTM = require("next-transpile-modules")([
+  // "monaco-editor"
+]);
 
-module.exports = {
+module.exports = withPlugins([withTM], {
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
@@ -22,4 +26,4 @@ module.exports = {
       },
     ];
   },
-};
+});
