@@ -1,10 +1,25 @@
-import { GetStaticProps, GetStaticPaths } from "next";
 import { BuilderComponent } from "@builder.io/react";
-
-import { User } from "../../interfaces";
-import { sampleUserData } from "../../utils/sample-data";
+import {
+  componentToAngular,
+  componentToBuilder,
+  componentToHtml,
+  componentToLiquid,
+  componentToReact,
+  componentToSolid,
+  componentToSvelte,
+  componentToVue,
+  parseJsx,
+} from "@jsx-lite/core";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { useEffect, useState } from "react";
+// import MonacoEditor from "react-monaco-editor";
 import Layout from "../../components/Layout";
+import { User } from "../../interfaces";
 import data from "../../utils/example.builder";
+import { sampleUserData } from "../../utils/sample-data";
+
+const defaultCode = require("raw-loader!../../content/components/rebuy.lite")
+  .default;
 
 type Props = {
   item?: User;
@@ -12,6 +27,38 @@ type Props = {
 };
 
 const StaticPropsDetail = ({ item, errors }: Props) => {
+  const [code] = useState(defaultCode);
+  const [outputTab] = useState("react");
+  const [, setOutput] = useState("");
+
+  useEffect(() => {
+    const json = parseJsx(code);
+    setOutput(
+      outputTab === "liquid"
+        ? componentToLiquid(json)
+        : outputTab === "html"
+        ? componentToHtml(json)
+        : outputTab === "react"
+        ? componentToReact(json, {
+            // stylesType: options.reactStyleType,
+            // stateType: options.reactStateType,
+          })
+        : outputTab === "solid"
+        ? componentToSolid(json)
+        : outputTab === "angular"
+        ? componentToAngular(json)
+        : outputTab === "svelte"
+        ? componentToSvelte(json, {
+            // stateType: options.svelteStateType,
+          })
+        : outputTab === "json"
+        ? JSON.stringify(json, null, 2)
+        : outputTab === "builder"
+        ? JSON.stringify(componentToBuilder(json), null, 2)
+        : componentToVue(json)
+    );
+  }, [code]);
+
   if (errors) {
     return (
       <Layout title="Error | Next.js + TypeScript Example">
@@ -38,12 +85,12 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
         >
           <div
             style={{
-              position: 'relative',
+              position: "relative",
               transform: "scale(0.8)",
               top: "-10%",
             }}
           >
-            <BuilderComponent content={data} />
+            <BuilderComponent content={data as any} />
           </div>
         </div>
       </div>
@@ -56,7 +103,7 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
           </nav>
           <div className="bg-gray-800 px-6 border-gray-600 border-r">
             <div className="p-60 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
-              {/* Code */}
+              {/* <MonacoEditor value={code} onChange={(value) => setCode(value)} /> */}
             </div>
           </div>
         </div>
@@ -87,7 +134,7 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
           </nav>
           <div className="bg-gray-800  px-6">
             <div className="p-60 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
-              {/* Stuff */}
+              {/* <MonacoEditor options={{ readOnly: true }} value={output} /> */}
             </div>
           </div>
         </div>
