@@ -11,8 +11,10 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.3.1",
     "@tailwindcss/ui": "^0.7.2",
+    "babel-plugin-inline-react-svg": "^1.1.2",
     "next": "latest",
     "next-seo": "^4.17.0",
+    "postcss": "^8.1.13",
     "postcss-preset-env": "^6.7.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
