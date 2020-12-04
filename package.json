@@ -9,6 +9,8 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@builder.io/react": "^1.1.31",
+    "@jsx-lite/core": "0.0.4-6",
     "@tailwindcss/typography": "^0.3.1",
     "@tailwindcss/ui": "^0.7.2",
     "babel-plugin-inline-react-svg": "^1.1.2",

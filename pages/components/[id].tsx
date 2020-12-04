@@ -1,8 +1,10 @@
 import { GetStaticProps, GetStaticPaths } from "next";
+import { BuilderComponent } from "@builder.io/react";
 
 import { User } from "../../interfaces";
 import { sampleUserData } from "../../utils/sample-data";
 import Layout from "../../components/Layout";
+import data from "../../utils/example.builder";
 
 type Props = {
   item?: User;
@@ -26,43 +28,70 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
         item ? item.name : "User Detail"
       } | Next.js + TypeScript Example`}
     >
-      <main className="bg-gray-50 border-b border-t border-gray-200 px-6 mt-8">
-        <div className="p-60 gap-8 text-center">Preview of the component</div>
-      </main>
-      <nav className="flex flex-col sm:flex-row border-b border-gray-200  overflow-auto lg:justify-center">
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
-          JSX Lite
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Builder
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          React
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Vue
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Svelte
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Solid
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Angular
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          HTML/CSS/JS
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Figma
-        </button>
-      </nav>
-      <main className="bg-gray-800 border-b border-gray-200 px-6">
-        <div className="p-60 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
-          {/* Stuff */}
+      <div className="bg-gray-50 border-b border-t border-gray-200 mt-8">
+        <div
+          style={{
+            minHeight: "50vh",
+            maxHeight: "80vh",
+            overflow: "auto",
+          }}
+        >
+          <div
+            style={{
+              position: 'relative',
+              transform: "scale(0.8)",
+              top: "-10%",
+            }}
+          >
+            <BuilderComponent content={data} />
+          </div>
         </div>
-      </main>
+      </div>
+      <div className="grid grid-cols-2">
+        <div className="">
+          <nav className="flex flex-col sm:flex-row  overflow-auto lg:justify-center">
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
+              JSX Lite
+            </button>
+          </nav>
+          <div className="bg-gray-800 px-6 border-gray-600 border-r">
+            <div className="p-60 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
+              {/* Code */}
+            </div>
+          </div>
+        </div>
+        <div>
+          <nav className="flex flex-col sm:flex-row border-l border-gray-200  overflow-auto lg:justify-center">
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
+              React
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+              Vue
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+              Svelte
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+              Solid
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+              Angular
+            </button>
+            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+              HTML
+            </button>
+            {/* TODO (maybe) */}
+            {/* <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+              Figma
+            </button> */}
+          </nav>
+          <div className="bg-gray-800  px-6">
+            <div className="p-60 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
+              {/* Stuff */}
+            </div>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };
