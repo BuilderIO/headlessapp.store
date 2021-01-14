@@ -22,10 +22,10 @@ const GridItem = ({ app }: { app: AppInfo }) => {
 
           <div>
             <h3 className="text-xl leading-7 font-semibold text-gray-100">
-              I am a cool component
+              {app.data.title}
             </h3>
             <p className="mt-1 text-gray-400 text-sm leading-6">
-              Hello there hi
+              {app.data.subtitle}
             </p>
           </div>
         </div>
