@@ -1,5 +1,5 @@
 import React from "react";
-import { BuilderComponent } from "@builder.io/react";
+import builder, { BuilderComponent } from "@builder.io/react";
 import {
   componentToAngular,
   componentToBuilder,
@@ -19,8 +19,9 @@ import { useEffect, useState } from "react";
 import { monaco, ControlledEditor as MonacoEditor } from "@monaco-editor/react";
 import Layout from "../../components/Layout";
 import { User } from "../../interfaces";
-import { sampleUserData } from "../../utils/sample-data";
-import { Show } from "./show";
+import { Show } from "../../components/show";
+
+builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
 
 if (typeof window !== "undefined") {
   monaco.init().then((monaco) => {
@@ -123,7 +124,7 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
         }}
         className="flex flex-col sm:flex-row  overflow-auto lg:justify-center"
       >
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
+        <button className="py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
           View
         </button>
         <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
@@ -270,64 +271,39 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
 export default StaticPropsDetail;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Get the paths we want to pre-render based on users
-  const paths = sampleUserData.map((user) => ({
-    params: { component: user.id.toString() },
-  }));
+  const results = await builder.getAll("app", {
+    key: "apps:all",
+    fields: "data.handle",
+  });
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
+  return {
+    paths: results.map((item) => ({ params: { handle: item.data!.handle } })),
+    fallback: false,
+  };
 };
 
 // This function gets called at build time on server-side.
 // It won't be called on client-side, so you can even do
 // direct database queries.
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (context) => {
   try {
+    const data = await builder.get("app", {
+      query: {
+        // Get the specific article by handle
+        "data.handle": context.params!.app,
+      },
+      ...{
+        options: {
+          includeRefs: true,
+        } as any,
+      },
+    });
     // By returning { props: item }, the StaticPropsDetail component
     // will receive `item` as a prop at build time
-    return { props: { item: true } };
+    return { props: { app: data } };
   } catch (err) {
     return { props: { errors: err.message } };
   }
 };
-
-const defaultCode = `
-import { useState, For } from '@jsx-lite/core';
-
-export default function MyComponent() {
-  const state = useState({
-    list: ['hello', 'world'],
-    newItemName: 'New item',
-    addItem() {
-      state.list = [...state.list, state.newItemName]
-    }
-  });
-
-  return (
-    <div css={{ padding: '10px' }}>
-      <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />          
-      <input 
-        class="shadow-md rounded w-full px-4 py-2"
-        value={state.newItemName} 
-        onChange={event => state.newItemName = event.target.value} />
-      <button 
-        class="bg-blue-500 rounded w-full text-white font-bold py-2 px-4 "
-        css={{ margin: '10px 0' }} 
-        onClick={() => state.addItem()}>
-        Add list item
-      </button>
-      <div class="shadow-md rounded">
-        <For each={state.list}>
-          {item => (
-            <div class="border-gray-200 border-b" css={{ padding: '10px' }}>
-              {item}
-            </div>
-          )}
-        </For>
-      </div>
-    </div>
-  );
-}
-`.trim();

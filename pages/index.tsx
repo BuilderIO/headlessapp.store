@@ -1,7 +1,17 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
+import { builder } from "@builder.io/react";
+import { GetStaticProps } from "next";
 
-const GridItem = () => {
+builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
+
+type AppInfo = {
+  data: {
+    handle: string;
+  };
+};
+
+const GridItem = ({ app }: { app: AppInfo }) => {
   const logo = false;
   return (
     <Link href="/components/101">
@@ -31,18 +41,34 @@ const GridItem = () => {
   );
 };
 
-const IndexPage = () => {
+const IndexPage = ({ data }: { data: AppInfo[] }) => {
   return (
     <Layout title="Home">
-      <main className="bg-gray-800 px-6 mt-8">
+      <main className="bg-gray-100 px-6 mt-8">
         <div className="py-8 grid md:grid-cols-2 gap-8 lg:grid-cols-3">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <GridItem key={i} />
+          {data.map((appInfo, i) => (
+            <GridItem app={appInfo} key={i} />
           ))}
         </div>
       </main>
     </Layout>
   );
+};
+
+// This function gets called at build time on server-side.
+// It won't be called on client-side, so you can even do
+// direct database queries.
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const data = await builder.getAll("app", {
+      key: "apps:all",
+      fields: "data.image,data.handle,data.title",
+    });
+
+    return { props: { data } };
+  } catch (err) {
+    return { props: { errors: err.message } };
+  }
 };
 
 export default IndexPage;

@@ -20,7 +20,7 @@ module.exports = withPlugins([withTM], {
   async redirects() {
     return [
       {
-        source: "/components",
+        source: "/apps",
         destination: "/",
         permanent: true,
       },

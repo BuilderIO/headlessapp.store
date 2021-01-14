@@ -19,11 +19,13 @@ const Navigation = () => {
           </nav>
         </div>
         <div className="hidden md:flex md:items-center md:text-right px-6">
-          <ActiveLink href="/" activeClassName="text-black">
-            <a className="px-3 py-1.5 text-sm rounded bg-gray-100 opacity-75 hover:text-black font-medium inline-flex items-center">
-              <span>Request</span>
-            </a>
-          </ActiveLink>
+          <a
+            target="_blank"
+            href="mailto:julia@builder.io"
+            className="px-3 py-1.5 text-sm rounded bg-gray-100 opacity-75 hover:text-black font-medium inline-flex items-center"
+          >
+            <span>Request</span>
+          </a>
         </div>
       </div>
     </nav>
