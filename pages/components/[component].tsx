@@ -3,21 +3,24 @@ import { BuilderComponent } from "@builder.io/react";
 import {
   componentToAngular,
   componentToBuilder,
+  componentToCustomElement,
   componentToHtml,
   componentToLiquid,
   componentToReact,
+  componentToReactNative,
   componentToSolid,
   componentToSvelte,
+  componentToSwift,
   componentToVue,
   parseJsx,
 } from "@jsx-lite/core";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useEffect, useState } from "react";
-import MonacoEditor, { monaco } from "@monaco-editor/react";
+import { monaco, ControlledEditor as MonacoEditor } from "@monaco-editor/react";
 import Layout from "../../components/Layout";
 import { User } from "../../interfaces";
-import data from "../../utils/example.builder";
 import { sampleUserData } from "../../utils/sample-data";
+import { Show } from "./show";
 
 if (typeof window !== "undefined") {
   monaco.init().then((monaco) => {
@@ -50,21 +53,36 @@ type Props = {
 };
 
 const StaticPropsDetail = ({ item, errors }: Props) => {
-  const [code] = useState(defaultCode);
+  const [code, setCode] = useState(defaultCode);
+  const [builderJson, setBuilderJson] = useState(null as any);
   const [outputTab, setOutputTab] = useState("react");
+  const [inputTab, setInputTab] = useState("info");
   const [output, setOutput] = useState("");
 
   useEffect(() => {
     const json = parseJsx(code);
+    if (code) {
+      const builderJson = componentToBuilder(json, { includeIds: true });
+      console.log({ builderJson });
+      setBuilderJson(builderJson);
+    }
     setOutput(
       outputTab === "liquid"
         ? componentToLiquid(json)
         : outputTab === "html"
         ? componentToHtml(json)
+        : outputTab === "webcomponents"
+        ? componentToCustomElement(json)
         : outputTab === "react"
         ? componentToReact(json, {
-            // stylesType: options.reactStyleType,
-            // stateType: options.reactStateType,
+            // stylesType: state.options.reactStyleType,
+            // stateType: state.options.reactStateType,
+          })
+        : outputTab === "swift"
+        ? componentToSwift(json)
+        : outputTab === "react native"
+        ? componentToReactNative(json, {
+            // stateType: state.options.reactStateType,
           })
         : outputTab === "solid"
         ? componentToSolid(json)
@@ -72,7 +90,7 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
         ? componentToAngular(json)
         : outputTab === "svelte"
         ? componentToSvelte(json, {
-            // stateType: options.svelteStateType,
+            // stateType: state.options.svelteStateType,
           })
         : outputTab === "json"
         ? JSON.stringify(json, null, 2)
@@ -127,68 +145,113 @@ const StaticPropsDetail = ({ item, errors }: Props) => {
               top: "-10%",
             }}
           >
-            <BuilderComponent content={data as any} />
+            <Show when={builderJson}>
+              <BuilderComponent content={builderJson} />
+            </Show>
           </div>
         </div>
       </div>
       <div className="grid grid-cols-2">
         <div className="">
           <nav className="flex flex-col sm:flex-row  overflow-auto lg:justify-center">
-            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
+            <button
+              onClick={() => {
+                setInputTab("info");
+              }}
+              className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+                inputTab === "info"
+                  ? "text-blue-500 border-b-2 font-medium border-blue-500"
+                  : ""
+              }`}
+            >
               Info
             </button>
-            <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
+            <button
+              onClick={() => {
+                setInputTab("jsx");
+              }}
+              className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+                inputTab === "jsx"
+                  ? "text-blue-500 border-b-2 font-medium border-blue-500"
+                  : ""
+              }`}
+            >
               JSX Lite
             </button>
           </nav>
-          {/* <div className="bg-gray-800 border-gray-600 border-r">
-            <div>
+
+          <div className="bg-gray-800 border-gray-600 border-r">
+            <Show when={inputTab === "info"}>
+              <div className="text-gray-100 p-5 prose">
+                <h2 className="text-gray-100">Hello I am info</h2>
+                <p>All sorts of good things</p>
+              </div>
+            </Show>
+            <Show when={inputTab === "jsx"}>
               <MonacoEditor
                 language="typescript"
                 theme="vs-dark"
                 value={code}
                 height="500px"
                 options={{ minimap: { enabled: false } }}
-                onChange={(value) => setCode(value)}
-              >
-              </MonacoEditor>
-            </div>
-          </div> */}
+                onChange={(_e, value) => {
+                  if (value !== code) {
+                    // setCode(value || "");
+                  }
+                }}
+              ></MonacoEditor>
+            </Show>
+          </div>
           <div className="bg-gray-800 border-gray-600 border-r h-full"></div>
         </div>
         <div>
-          <nav className="flex flex-col sm:flex-row border-l border-gray-200  overflow-auto lg:justify-center">
-            {["React", "Vue", "Svelte", "Solid", "Angular", "HTML"].map(
-              (name, index) => {
-                const lowerName = name.toLowerCase();
-                const isActive = lowerName === outputTab;
-                return (
-                  <React.Fragment key={index}>
-                    <button
-                      onClick={() => {
-                        setOutputTab(lowerName);
-                      }}
-                      className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
-                        isActive
-                          ? "text-blue-500 border-b-2 font-medium border-blue-500"
-                          : ""
-                      }`}
-                    >
-                      {name}
-                    </button>
-                  </React.Fragment>
-                );
-              }
-            )}
+          <nav className="flex flex-col sm:flex-row border-l border-gray-200  overflow-auto">
+            {[
+              "React",
+              "Vue",
+              "Svelte",
+              "Solid",
+              "Angular",
+              "HTML",
+              "React Native",
+              "Swift",
+              "Webcomponents",
+            ].map((name, index) => {
+              const lowerName = name.toLowerCase();
+              const isActive = lowerName === outputTab;
+              return (
+                <React.Fragment key={index}>
+                  <button
+                    onClick={() => {
+                      setOutputTab(lowerName);
+                    }}
+                    className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+                      isActive
+                        ? "text-blue-500 border-b-2 font-medium border-blue-500"
+                        : ""
+                    }`}
+                    style={{
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {name}
+                  </button>
+                </React.Fragment>
+              );
+            })}
           </nav>
           <div className="bg-gray-800">
             <MonacoEditor
               theme="vs-dark"
               language={
-                outputTab === "json" || outputTab === "builder"
+                outputTab === "swift"
+                  ? "swift"
+                  : outputTab === "json" || outputTab === "builder"
                   ? "json"
                   : outputTab === "react" ||
+                    outputTab === "react native" ||
                     outputTab === "angular" ||
+                    outputTab === "webcomponents" ||
                     outputTab === "solid"
                   ? "typescript"
                   : "html"
@@ -231,40 +294,35 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const defaultCode = `
-import { useState, For } from "@jsx-lite/core";
+import { useState, For } from '@jsx-lite/core';
 
 export default function MyComponent() {
   const state = useState({
-    list: [{ text: "hello" }, { text: "world" }],
-    newItemName: "New item",
+    list: ['hello', 'world'],
+    newItemName: 'New item',
     addItem() {
-      state.list = [...state.list, { text: state.newItemName }];
-    },
+      state.list = [...state.list, state.newItemName]
+    }
   });
 
   return (
-    <div css={{ padding: "10px" }}>
-      <link
-        href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
-        rel="stylesheet"
-      />
-      <input
+    <div css={{ padding: '10px' }}>
+      <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />          
+      <input 
         class="shadow-md rounded w-full px-4 py-2"
-        value={state.newItemName}
-        onChange={(event) => (state.newItemName = event.target.value)}
-      />
-      <button
+        value={state.newItemName} 
+        onChange={event => state.newItemName = event.target.value} />
+      <button 
         class="bg-blue-500 rounded w-full text-white font-bold py-2 px-4 "
-        css={{ margin: "10px 0" }}
-        onClick={() => state.addItem()}
-      >
+        css={{ margin: '10px 0' }} 
+        onClick={() => state.addItem()}>
         Add list item
       </button>
       <div class="shadow-md rounded">
         <For each={state.list}>
-          {(item) => (
-            <div class="border-gray-200 border-b" css={{ padding: "10px" }}>
-              {item.text}
+          {item => (
+            <div class="border-gray-200 border-b" css={{ padding: '10px' }}>
+              {item}
             </div>
           )}
         </For>
@@ -272,4 +330,4 @@ export default function MyComponent() {
     </div>
   );
 }
-`;
+`.trim();

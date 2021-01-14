@@ -216,6 +216,13 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.12.7.tgz#fee7b39fe809d0e73e5b25eecaf5780ef3d73056"
   integrity sha512-oWR02Ubp4xTLCAqPRiNIuMVgNO5Aif/xpXtabhzW2HWUD47XJsAB4Zd/Rg30+XeQA3juXigV7hlquOTmwqLiwg==
 
+"@babel/plugin-syntax-decorators@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-7.12.1.tgz#81a8b535b284476c41be6de06853a8802b98c5dd"
+  integrity sha512-ir9YW5daRrTYiy9UJ2TzdNIJEZu8KclVzDcfSt4iEmOtwQ4llPtWInNKJyKnVXp1vE4bbVd5S31M/im3mYMO1w==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.10.4"
+
 "@babel/plugin-syntax-jsx@^7.12.1":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-jsx/-/plugin-syntax-jsx-7.12.1.tgz#9d9d357cc818aa7ae7935917c1257f67677a0926"
@@ -434,12 +441,13 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.0.tgz#6c9eafc78c1529248f8f4d92b0799a712b6052c6"
   integrity sha512-i9YbZPN3QgfighY/1X1Pu118VUz2Fmmhd6b2n0/O8YVgGGfw0FbUYoA97k7FkpGJ+pLCFEDLUmAPPV4D1kpeFw==
 
-"@jsx-lite/core@0.0.4-6":
-  version "0.0.4-6"
-  resolved "https://registry.yarnpkg.com/@jsx-lite/core/-/core-0.0.4-6.tgz#1faf741a2d2185e05fa87f3aeef0c5d23abdcc78"
-  integrity sha512-kNffSPxYJ/5ZW0Z1e2lnWmY0NKMqlTWkks8DQx5etAScU557szXTiWu7plfMmf80hMwiFfQ/XEb20dYNFUIpTg==
+"@jsx-lite/core@^0.0.4-8":
+  version "0.0.4-8"
+  resolved "https://registry.yarnpkg.com/@jsx-lite/core/-/core-0.0.4-8.tgz#fdcae5d5f7394c7c805f669ddf617e0848b7d1a9"
+  integrity sha512-vO1jiuyH5lzd7nOvk+4TJUk5FvbRGBrW7NI30kSPntBCTgrTLXIB0nTK4StSNq6XB5JtIE2HSHOdTaNvYCxOhQ==
   dependencies:
     "@babel/core" "^7.12.3"
+    "@babel/plugin-syntax-decorators" "^7.12.1"
     "@babel/plugin-syntax-jsx" "^7.12.1"
     "@babel/preset-typescript" "^7.12.1"
     axios "^0.21.0"
