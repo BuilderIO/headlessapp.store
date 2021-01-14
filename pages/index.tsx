@@ -2,19 +2,12 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import { builder } from "@builder.io/react";
 import { GetStaticProps } from "next";
-
-builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
-
-type AppInfo = {
-  data: {
-    handle: string;
-  };
-};
+import { AppInfo } from "../interfaces/app";
 
 const GridItem = ({ app }: { app: AppInfo }) => {
   const logo = false;
   return (
-    <Link href="/components/101">
+    <Link href={`/apps/${app.data.handle}`}>
       <a className="p-8 bg-gray-600 rounded relative shadow group overflow-hidden md:py-16 text-center transition duration-150 ease-in-out">
         <div className="relative z-10">
           <div className="mb-4">
@@ -65,7 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
       fields: "data.image,data.handle,data.title",
     });
 
-    return { props: { data } };
+    return { props: { data: JSON.parse(JSON.stringify(data)) } };
   } catch (err) {
     return { props: { errors: err.message } };
   }

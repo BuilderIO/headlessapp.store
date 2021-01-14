@@ -20,6 +20,7 @@ import { monaco, ControlledEditor as MonacoEditor } from "@monaco-editor/react";
 import Layout from "../../components/Layout";
 import { User } from "../../interfaces";
 import { Show } from "../../components/show";
+import { AppInfo } from "../../interfaces/app";
 
 builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
 
@@ -45,22 +46,22 @@ if (typeof window !== "undefined") {
   });
 }
 
-// const defaultCode = require("raw-loader!../../content/components/rebuy.lite")
-//   .default;
-
 type Props = {
-  item?: User;
+  app?: AppInfo;
   errors?: string;
 };
 
-const StaticPropsDetail = ({ item, errors }: Props) => {
-  const [code, setCode] = useState(defaultCode);
+const StaticPropsDetail = ({ app, errors }: Props) => {
+  const [code, setCode] = useState(app?.data.code || "");
   const [builderJson, setBuilderJson] = useState(null as any);
   const [outputTab, setOutputTab] = useState("react");
   const [inputTab, setInputTab] = useState("info");
   const [output, setOutput] = useState("");
 
   useEffect(() => {
+    if (!code) {
+      return;
+    }
     const json = parseJsx(code);
     if (code) {
       const builderJson = componentToBuilder(json, { includeIds: true });
@@ -279,7 +280,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
   return {
-    paths: results.map((item) => ({ params: { handle: item.data!.handle } })),
+    paths: results
+      .map((item) => ({ params: { app: item.data!.handle } }))
+      .concat([{ params: { app: "_" /* For previewing and editing */ } }]),
     fallback: false,
   };
 };
@@ -289,20 +292,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // direct database queries.
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
-    const data = await builder.get("app", {
-      query: {
-        // Get the specific article by handle
-        "data.handle": context.params!.app,
-      },
-      ...{
-        options: {
-          includeRefs: true,
-        } as any,
-      },
-    });
+    const data = await builder
+      .get("app", {
+        query: {
+          // Get the specific article by handle
+          "data.handle": context.params!.app,
+        },
+        ...{
+          options: {
+            includeRefs: true,
+          } as any,
+        },
+      })
+      .promise();
     // By returning { props: item }, the StaticPropsDetail component
     // will receive `item` as a prop at build time
-    return { props: { app: data } };
+    return { props: { app: JSON.parse(JSON.stringify(data)) } };
   } catch (err) {
     return { props: { errors: err.message } };
   }
