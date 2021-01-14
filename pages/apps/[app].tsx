@@ -18,11 +18,8 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { useEffect, useState } from "react";
 import { monaco, ControlledEditor as MonacoEditor } from "@monaco-editor/react";
 import Layout from "../../components/Layout";
-import { User } from "../../interfaces";
 import { Show } from "../../components/show";
 import { AppInfo } from "../../interfaces/app";
-
-builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
 
 if (typeof window !== "undefined") {
   monaco.init().then((monaco) => {
@@ -57,6 +54,12 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
   const [outputTab, setOutputTab] = useState("react");
   const [inputTab, setInputTab] = useState("info");
   const [output, setOutput] = useState("");
+
+  useEffect(() => {
+    if (app?.data.code) {
+      setCode(app.data.code);
+    }
+  }, [app?.data.code]);
 
   useEffect(() => {
     if (!code) {
@@ -185,8 +188,8 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
           <div className="bg-gray-800 border-gray-600 border-r">
             <Show when={inputTab === "info"}>
               <div className="text-gray-100 p-5 prose">
-                <h2 className="text-gray-100">Hello I am info</h2>
-                <p>All sorts of good things</p>
+                <h2 className="text-gray-100">{app?.data.title}</h2>
+                <p>{app?.data.subtitle}</p>
               </div>
             </Show>
             <Show when={inputTab === "jsx"}>
