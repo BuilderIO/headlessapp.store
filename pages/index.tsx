@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
       fields: "data.image,data.handle,data.title",
     });
 
-    return { props: { data: JSON.parse(JSON.stringify(data)) } };
+    return { props: { data: JSON.parse(JSON.stringify(data)) }, revalidate: 1 };
   } catch (err) {
     return { props: { errors: err.message } };
   }

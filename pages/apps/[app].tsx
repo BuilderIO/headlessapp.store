@@ -122,19 +122,7 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
           background-color: transparent !important;
         }
       `}</style>
-      <nav
-        style={{
-          marginTop: -30,
-        }}
-        className="flex flex-col sm:flex-row  overflow-auto lg:justify-center"
-      >
-        <button className="py-4 px-6 block hover:text-blue-500 focus:outline-none text-blue-500 border-b-2 font-medium border-blue-500">
-          View
-        </button>
-        <button className="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none">
-          Edit
-        </button>
-      </nav>
+
       <div className="bg-gray-50 border-b border-t border-gray-200">
         <div
           style={{
@@ -156,59 +144,29 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2">
-        <div className="">
-          <nav className="flex flex-col sm:flex-row  overflow-auto lg:justify-center">
-            <button
-              onClick={() => {
-                setInputTab("info");
-              }}
-              className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
-                inputTab === "info"
-                  ? "text-blue-500 border-b-2 font-medium border-blue-500"
-                  : ""
-              }`}
-            >
-              Info
-            </button>
-            <button
-              onClick={() => {
-                setInputTab("jsx");
-              }}
-              className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
-                inputTab === "jsx"
-                  ? "text-blue-500 border-b-2 font-medium border-blue-500"
-                  : ""
-              }`}
-            >
-              JSX Lite
-            </button>
-          </nav>
 
-          <div className="bg-gray-800 border-gray-600 border-r">
-            <Show when={inputTab === "info"}>
-              <div className="text-gray-100 p-5 prose">
-                <h2 className="text-gray-100">{app?.data.title}</h2>
-                <p>{app?.data.subtitle}</p>
-              </div>
-            </Show>
-            <Show when={inputTab === "jsx"}>
-              <MonacoEditor
-                language="typescript"
-                theme="vs-dark"
-                value={code}
-                height="500px"
-                options={{ minimap: { enabled: false } }}
-                onChange={(_e, value) => {
-                  if (value !== code) {
-                    // setCode(value || "");
-                  }
-                }}
-              ></MonacoEditor>
-            </Show>
+      <div className="bg-gray-800 border-gray-600 border-r">
+        <Show when={inputTab === "info"}>
+          <div className="text-gray-100 p-5 prose">
+            <h2 className="text-gray-100">{app?.data.title}</h2>
+            <p>{app?.data.subtitle}</p>
           </div>
-          <div className="bg-gray-800 border-gray-600 border-r h-full"></div>
-        </div>
+        </Show>
+        <Show when={inputTab === "jsx"}>
+          <MonacoEditor
+            language="typescript"
+            theme="vs-dark"
+            value={code}
+            height="500px"
+            options={{ minimap: { enabled: false } }}
+            onChange={(_e, value) => {
+              if (value !== code) {
+                // setCode(value || "");
+              }
+            }}
+          ></MonacoEditor>
+        </Show>
+
         <div>
           <nav className="flex flex-col sm:flex-row border-l border-gray-200  overflow-auto">
             {[
@@ -268,6 +226,7 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
           </div>
         </div>
       </div>
+      <BuilderComponent model="app" content={app as any} />
     </Layout>
   );
 };
@@ -286,7 +245,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: results
       .map((item) => ({ params: { app: item.data!.handle } }))
       .concat([{ params: { app: "_" /* For previewing and editing */ } }]),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -310,7 +269,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       .promise();
     // By returning { props: item }, the StaticPropsDetail component
     // will receive `item` as a prop at build time
-    return { props: { app: JSON.parse(JSON.stringify(data)) } };
+    return { props: { app: JSON.parse(JSON.stringify(data)) }, revalidate: 1 };
   } catch (err) {
     return { props: { errors: err.message } };
   }
