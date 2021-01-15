@@ -52,7 +52,6 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
   const [code, setCode] = useState(app?.data.code || "");
   const [builderJson, setBuilderJson] = useState(null as any);
   const [outputTab, setOutputTab] = useState("react");
-  const [inputTab, setInputTab] = useState("info");
   const [output, setOutput] = useState("");
 
   useEffect(() => {
@@ -146,26 +145,10 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
       </div>
 
       <div className="bg-gray-800 border-gray-600 border-r">
-        <Show when={inputTab === "info"}>
-          <div className="text-gray-100 p-5 prose">
-            <h2 className="text-gray-100">{app?.data.title}</h2>
-            <p>{app?.data.subtitle}</p>
-          </div>
-        </Show>
-        <Show when={inputTab === "jsx"}>
-          <MonacoEditor
-            language="typescript"
-            theme="vs-dark"
-            value={code}
-            height="500px"
-            options={{ minimap: { enabled: false } }}
-            onChange={(_e, value) => {
-              if (value !== code) {
-                // setCode(value || "");
-              }
-            }}
-          ></MonacoEditor>
-        </Show>
+        <div className="text-gray-100 p-5 prose">
+          <h2 className="text-gray-100">{app?.data.title}</h2>
+          <p>{app?.data.subtitle}</p>
+        </div>
 
         <div>
           <nav className="flex flex-col sm:flex-row border-l border-gray-200  overflow-auto">
