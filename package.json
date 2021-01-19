@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@builder.io/react": "^1.1.31",
-    "@jsx-lite/core": "0.0.4-13",
+    "@jsx-lite/core": "0.0.4-14",
     "@monaco-editor/react": "^3.7.1",
     "@tailwindcss/typography": "^0.3.1",
     "@tailwindcss/ui": "^0.7.2",
