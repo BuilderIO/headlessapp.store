@@ -11,7 +11,7 @@ const Navigation = () => {
           </Link>
 
           <nav className="flex items-center md:border-gray-200 md:pl-6 md:ml-6 space-x-3">
-            <ActiveLink href="/" activeClassName="text-black">
+            <ActiveLink href="/discover" activeClassName="text-black">
               <a className="px-3 py-1.5 text-sm opacity-75 hover:text-black font-medium hidden md:flex items-center">
                 <span>Discover</span>
               </a>

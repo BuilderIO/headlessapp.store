@@ -64,38 +64,42 @@ export function GetApp(props: { app: AppInfo }) {
       console.log({ builderJson });
       setBuilderJson(builderJson);
     }
-    setOutput(
-      outputTab === "liquid"
-        ? componentToLiquid(json)
-        : outputTab === "html"
-        ? componentToHtml(json)
-        : outputTab === "webcomponents"
-        ? componentToCustomElement(json)
-        : outputTab === "react"
-        ? componentToReact(json, {
-            // stylesType: state.options.reactStyleType,
-            // stateType: state.options.reactStateType,
-          })
-        : outputTab === "swift"
-        ? componentToSwift(json)
-        : outputTab === "react native"
-        ? componentToReactNative(json, {
-            // stateType: state.options.reactStateType,
-          })
-        : outputTab === "solid"
-        ? componentToSolid(json)
-        : outputTab === "angular"
-        ? componentToAngular(json)
-        : outputTab === "svelte"
-        ? componentToSvelte(json, {
-            // stateType: state.options.svelteStateType,
-          })
-        : outputTab === "json"
-        ? JSON.stringify(json, null, 2)
-        : outputTab === "builder"
-        ? JSON.stringify(componentToBuilder(json), null, 2)
-        : componentToVue(json)
-    );
+    try {
+      setOutput(
+        outputTab === "liquid"
+          ? componentToLiquid(json)
+          : outputTab === "html"
+          ? componentToHtml(json)
+          : outputTab === "webcomponents"
+          ? componentToCustomElement(json)
+          : outputTab === "react"
+          ? componentToReact(json, {
+              // stylesType: state.options.reactStyleType,
+              // stateType: state.options.reactStateType,
+            })
+          : outputTab === "swift"
+          ? componentToSwift(json)
+          : outputTab === "react native"
+          ? componentToReactNative(json, {
+              // stateType: state.options.reactStateType,
+            })
+          : outputTab === "solid"
+          ? componentToSolid(json)
+          : outputTab === "angular"
+          ? componentToAngular(json)
+          : outputTab === "svelte"
+          ? componentToSvelte(json, {
+              // stateType: state.options.svelteStateType,
+            })
+          : outputTab === "json"
+          ? JSON.stringify(json, null, 2)
+          : outputTab === "builder"
+          ? JSON.stringify(componentToBuilder(json), null, 2)
+          : componentToVue(json)
+      );
+    } catch (err) {
+      console.warn(err);
+    }
   }, [code, outputTab]);
 
   return (
