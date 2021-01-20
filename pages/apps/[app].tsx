@@ -1,6 +1,6 @@
 import builder, { BuilderComponent } from "@builder.io/react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import React from "react";
+import React, { useState } from "react";
 import { GetApp } from "../../components/GetApp";
 import Layout from "../../components/Layout";
 import { AppInfo } from "../../interfaces/app";
@@ -10,7 +10,9 @@ type Props = {
   errors?: string;
 };
 
-const StaticPropsDetail = ({ app, errors }: Props) => {
+const AppPage = ({ app, errors }: Props) => {
+  const [showBuilderDrawer, setShowBuilderDrawer] = useState(false);
+
   if (errors) {
     return (
       <Layout title="Error | Next.js + TypeScript Example">
@@ -29,25 +31,40 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
         }
       `}</style>
 
-      <div className="p-8 bg-white shadow-md full-width">
+      <div className="p-16 bg-white shadow-md full-width">
         <div className="container mx-auto">
           <h2 className="text-6xl">{app?.data.title}</h2>
-          <p className="text-gray-700 mt-3">{app?.data.subtitle}</p>
+          <p className="text-gray-700 mt-6">{app?.data.subtitle}</p>
 
-          <div className="flex-row  mt-5">
-            <a href="#get-app-code" className="btn-primary">Get app</a>
-            <button className="text-primary ml-5">Customize</button>
+          <div className="flex-row mt-10">
+            <a href="#get-app-code" className="btn-primary-lg">
+              Get app
+            </a>
+            <button
+              className="text-primary ml-5"
+              onClick={() => {
+                setShowBuilderDrawer(true);
+              }}
+            >
+              Customize
+            </button>
           </div>
         </div>
       </div>
 
-      {app && <GetApp app={app} />}
+      {app && (
+        <GetApp
+          onCloseDrawer={() => setShowBuilderDrawer(false)}
+          showBuilderDrawer={showBuilderDrawer}
+          app={app}
+        />
+      )}
       <BuilderComponent model="app" content={app as any} />
     </Layout>
   );
 };
 
-export default StaticPropsDetail;
+export default AppPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const results = await builder.getAll("app", {

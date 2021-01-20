@@ -15,7 +15,7 @@ class MyDocument extends Document {
             <Main />
           </div>
           <NextScript />
-          <script async src="https://cdn.builder.io/js/fiddle"></script>
+          <script async src="https://cdn.builder.io/js/editor"></script>
         </body>
       </Html>
     );

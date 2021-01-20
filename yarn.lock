@@ -562,6 +562,21 @@
   dependencies:
     "@types/react" "^16"
 
+"@types/react-portal@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-portal/-/react-portal-4.0.2.tgz#57a7f4c8ad48097c5a2d0cbbd09187831b91afdf"
+  integrity sha512-8tOaQHURcZ9j5lg9laFRu5/7+ol71WvVs10VXuIp7IuoIwR2iXQB8+BOEASMRgc/+L1omgANCy+WyXDTmc1/iQ==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.0.tgz#5af3eb7fad2807092f0046a1302b7823e27919b8"
+  integrity sha512-aj/L7RIMsRlWML3YB6KZiXB3fV2t41+5RBGYF8z+tAKU43Px8C3cYUZsDvf1/+Bm4FK21QWBrDutu8ZJ/70qOw==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
+
 "@types/react@^16", "@types/react@^16.9.16":
   version "16.14.2"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.2.tgz#85dcc0947d0645349923c04ccef6018a1ab7538c"
@@ -4333,7 +4348,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.7.2, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -4498,6 +4513,13 @@ react-monaco-editor@^0.40.0:
   dependencies:
     monaco-editor "*"
     prop-types "^15.7.2"
+
+react-portal@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-4.2.1.tgz#12c1599238c06fb08a9800f3070bea2a3f78b1a6"
+  integrity sha512-fE9kOBagwmTXZ3YGRYb4gcMy+kSA+yLO0xnPankjRlfBv4uCpFXqKPfkpsGQQR15wkZ9EssnvTOl1yMzbkxhPQ==
+  dependencies:
+    prop-types "^15.5.8"
 
 react-refresh@0.8.3:
   version "0.8.3"
@@ -5559,6 +5581,11 @@ watchpack@^1.7.4:
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
+
+webcomponents-in-react@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/webcomponents-in-react/-/webcomponents-in-react-1.0.1.tgz#fe1910606daeaefa1e9d8c920876cdea9cea7299"
+  integrity sha512-8VhMvI5ZUP3LdGoIbbMhGL0KY5JOsoDagPoQ08s3Kn6Zbb3ocHYplLI1BydPVIG6lJV8WAIQf5ImV2XJGAYEuw==
 
 webidl-conversions@^4.0.2:
   version "4.0.2"

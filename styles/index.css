@@ -6,6 +6,14 @@
   @apply py-2 px-4 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
 }
 
+/* 
+  TODO: how to share the same base styles and only override padding 
+  @apply btn-primary p-8; // <- didn't work
+*/
+.btn-primary-lg {
+  @apply py-4 px-8 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75;
+}
+
 .full-width {
   width: 100vw;
   position: relative;
@@ -13,4 +21,8 @@
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+}
+
+.text-link {
+  @apply text-primary;
 }

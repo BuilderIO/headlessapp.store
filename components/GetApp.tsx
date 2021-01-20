@@ -1,8 +1,10 @@
 import {
+  builderContentToJsxLiteComponent,
   componentToAngular,
   componentToBuilder,
   componentToCustomElement,
   componentToHtml,
+  componentToJsxLite,
   componentToLiquid,
   componentToReact,
   componentToReactNative,
@@ -17,7 +19,13 @@ import { useEffect, useState } from "react";
 import { AppInfo } from "../interfaces/app";
 import { ControlledEditor as MonacoEditor, monaco } from "@monaco-editor/react";
 import { Show } from "./show";
-import { BuilderComponent } from "@builder.io/react";
+import { Builder, BuilderComponent } from "@builder.io/react";
+import { BuilderContent } from "@builder.io/sdk";
+import { adapt } from "webcomponents-in-react";
+import { Portal } from "react-portal";
+import { getQueryParam } from "./functions/get-query-param";
+
+const BuilderEditor = adapt("builder-editor");
 
 if (typeof window !== "undefined") {
   monaco.init().then((monaco) => {
@@ -41,13 +49,41 @@ if (typeof window !== "undefined") {
   });
 }
 
-export function GetApp(props: { app: AppInfo }) {
+const builderOptions = {
+  useDefaultStyles: false,
+  hideAnimateTab: true,
+  previewUrl: "https://jsx-lite.builder.io/preview.html",
+};
+
+export function GetApp(props: {
+  app: AppInfo;
+  showBuilderDrawer?: boolean;
+  onCloseDrawer: () => void;
+}) {
+  // For direct mutation without triggering a rerender (mostly for performance)
+  const [privateState] = useState({
+    latestBuilderJson: null as null | BuilderContent,
+  });
   const { app } = props;
   const [code, setCode] = useState("");
   const [builderJson, setBuilderJson] = useState(null as any);
   const [outputTab, setOutputTab] = useState("react");
   const [output, setOutput] = useState("");
   const [activeTemplate, setActiveTemplate] = useState(0);
+  const [loadBuilder, setLoadBuilder] = useState(false);
+
+  const builderEnvParam = Builder.isBrowser && getQueryParam("builderEnv");
+
+  const { showBuilderDrawer } = props;
+
+  useEffect(() => {
+    if (showBuilderDrawer && !loadBuilder) {
+      setLoadBuilder(true);
+    }
+    if (showBuilderDrawer) {
+      privateState.latestBuilderJson = null;
+    }
+  }, [showBuilderDrawer, loadBuilder]);
 
   useEffect(() => {
     const code = app?.data.templates?.[activeTemplate]?.code;
@@ -138,7 +174,10 @@ export function GetApp(props: { app: AppInfo }) {
           </Show>
         </div>
       </div>
-      <nav id="get-app-code" className="flex flex-col sm:flex-row overflow-auto justify-center">
+      <nav
+        id="get-app-code"
+        className="flex flex-col sm:flex-row overflow-auto justify-center"
+      >
         {[
           "Builder",
           "React",
@@ -188,12 +227,57 @@ export function GetApp(props: { app: AppInfo }) {
                 : "html"
             }
             height="50vh"
-            className="bg-gray-800 rounded pt-2"
+            className="bg-gray-800 rounded pt-2 shadow-lg"
             options={{ readOnly: true, minimap: { enabled: false } }}
             value={output}
           />
         </div>
       </div>
+
+      <Portal>
+        <div
+          className="fixed bg-black top-0 left-0 right-0 bottom-0"
+          style={{
+            opacity: showBuilderDrawer ? 0.3 : 0,
+            transition: "opacity 0.2s ease-in-out",
+            pointerEvents: showBuilderDrawer ? "auto" : "none",
+          }}
+          onClick={() => {
+            props.onCloseDrawer?.();
+
+            if (privateState.latestBuilderJson) {
+              setCode(
+                componentToJsxLite(
+                  builderContentToJsxLiteComponent(
+                    privateState.latestBuilderJson
+                  )
+                )
+              );
+            }
+          }}
+        ></div>
+        <div
+          style={{
+            transform: `translate3d(0, ${showBuilderDrawer ? "0" : "20%"}, 0)`,
+            opacity: showBuilderDrawer ? 1 : 0,
+            transition: "transform 0.2s ease-in-out, opacity 0.2s ease-in-out",
+            pointerEvents: showBuilderDrawer ? "auto" : "none",
+          }}
+          className="bg-white p-12 shadow-2xl z-10 fixed bottom-0 left-0 right-0 top-16"
+        >
+          <Show when={loadBuilder}>
+            <BuilderEditor
+              class="absolute top-0 right-0 bottom-0 left-0 width-full"
+              onChange={(e: CustomEvent) => {
+                privateState.latestBuilderJson = e.detail;
+              }}
+              data={showBuilderDrawer && builderJson}
+              options={builderOptions}
+              env={builderEnvParam || undefined}
+            />
+          </Show>
+        </div>
+      </Portal>
     </div>
   );
 }

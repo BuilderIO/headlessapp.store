@@ -1,6 +1,8 @@
 import Link from "next/link";
 import ActiveLink from "./ActiveLink";
 
+const NAME = "JSX Lite Gallery"; // 'JSX Lite Gallery'
+
 const Navigation = () => {
   return (
     <nav className="mx-auto bg-primary p-6 md:p-8 full-width">
@@ -15,7 +17,7 @@ const Navigation = () => {
           </nav>
         </div>
         <Link href="/">
-          <a>Headless App Store</a>
+          <a className="text-xl">{NAME}</a>
         </Link>
         <div className="hidden md:flex md:items-center md:text-right px-6 md:flex-1 justify-end">
           <a

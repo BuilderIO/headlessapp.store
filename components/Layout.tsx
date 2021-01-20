@@ -18,6 +18,62 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
       <Navigation />
     </header>
     {children}
+    <footer className="text-center p-16">
+      <div className="text-lg">
+        Made with ❤️ by{" "}
+        <a
+          className="text-link"
+          target="_blank"
+          rel="nooppener"
+          href="https://www.builder.io"
+        >
+          Builder.io
+        </a>
+        .
+      </div>
+      <div className="mt-3">
+        Built with{" "}
+        <a className="text-link" href="https://www.builder.io">
+          Builder.io
+        </a>
+        ,{" "}
+        <a
+          className="text-link"
+          rel="nooppener"
+          target="_blank"
+          href="https://www.builder.io"
+        >
+          JSX Lite
+        </a>
+        ,{" "}
+        <a
+          className="text-link"
+          rel="nooppener"
+          target="_blank"
+          href="https://www.builder.io"
+        >
+          Next.js
+        </a>
+        ,{" "}
+        <a
+          className="text-link"
+          rel="nooppener"
+          target="_blank"
+          href="https://www.builder.io"
+        >
+          TailwindCSS
+        </a>
+        . Hosted by{" "}
+        <a
+          className="text-link"
+          rel="nooppener"
+          target="_blank"
+          href="https://www.builder.io"
+        >
+          Vercel
+        </a>
+      </div>
+    </footer>
   </div>
 );
 
