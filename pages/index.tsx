@@ -1,5 +1,5 @@
 export const Index = () => (
-  <div className="h-screen w-screen flex items-center justify-center">
+  <div className="h-screen flex items-center justify-center">
     Coming soon :)
   </div>
 );

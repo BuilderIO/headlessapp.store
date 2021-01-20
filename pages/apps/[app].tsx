@@ -29,13 +29,15 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
         }
       `}</style>
 
-      <div className="p-8 bg-white">
-        <h2 className="text-6xl">{app?.data.title}</h2>
-        <p className="text-gray-700 mt-3">{app?.data.subtitle}</p>
+      <div className="p-8 bg-white shadow-md full-width">
+        <div className="container mx-auto">
+          <h2 className="text-6xl">{app?.data.title}</h2>
+          <p className="text-gray-700 mt-3">{app?.data.subtitle}</p>
 
-        <div className="flex-row  mt-5">
-          <button className="btn-primary">Get app</button>
-          <button className="text-primary ml-5">Customize</button>
+          <div className="flex-row  mt-5">
+            <a href="#get-app-code" className="btn-primary">Get app</a>
+            <button className="text-primary ml-5">Customize</button>
+          </div>
         </div>
       </div>
 

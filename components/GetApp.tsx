@@ -104,8 +104,8 @@ export function GetApp(props: { app: AppInfo }) {
 
   return (
     <div>
-      <div>
-        <nav className="flex flex-col sm:flex-row overflow-auto">
+      <div className="mt-8">
+        <nav className="flex justify-center flex-col sm:flex-row overflow-auto">
           {app?.data.templates?.map(({ name }, index) => {
             const isActive = index === activeTemplate;
             return (
@@ -138,13 +138,12 @@ export function GetApp(props: { app: AppInfo }) {
           </Show>
         </div>
       </div>
-      <nav className="flex flex-col sm:flex-row overflow-auto">
+      <nav id="get-app-code" className="flex flex-col sm:flex-row overflow-auto justify-center">
         {[
           "Builder",
           "React",
           "Vue",
           "Angular",
-          "Liquid",
           "Svelte",
           "Solid",
           "HTML",
@@ -172,7 +171,7 @@ export function GetApp(props: { app: AppInfo }) {
       </nav>
       <div className="grid grid-cols-2 gap-4">
         <div>How to</div>
-        <div>
+        <div className="m-6">
           <MonacoEditor
             theme="vs-dark"
             language={
@@ -189,7 +188,7 @@ export function GetApp(props: { app: AppInfo }) {
                 : "html"
             }
             height="50vh"
-            className="bg-gray-800 rounded m-6 pt-2"
+            className="bg-gray-800 rounded pt-2"
             options={{ readOnly: true, minimap: { enabled: false } }}
             value={output}
           />
