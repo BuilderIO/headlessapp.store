@@ -33,21 +33,29 @@ const AppPage = ({ app, errors }: Props) => {
 
       <div className="p-16 bg-white shadow-md full-width">
         <div className="container mx-auto">
-          <h2 className="text-6xl">{app?.data.title}</h2>
-          <p className="text-gray-700 mt-6">{app?.data.subtitle}</p>
+          <div className="flex">
+            <img
+              src={app?.data.image}
+              className="w-60 h-40 rounded bg-white mr-20 self-center object-contain object-center shadow-lg"
+            />
+            <div>
+              <h2 className="text-6xl">{app?.data.title}</h2>
+              <p className="text-gray-700 mt-6">{app?.data.subtitle}</p>
 
-          <div className="flex-row mt-10">
-            <a href="#get-app-code" className="btn-primary-lg">
-              Get app
-            </a>
-            <button
-              className="text-primary ml-5"
-              onClick={() => {
-                setShowBuilderDrawer(true);
-              }}
-            >
-              Customize
-            </button>
+              <div className="flex-row mt-10">
+                <a href="#get-app-code" className="btn-primary-lg">
+                  Get app
+                </a>
+                <button
+                  className="text-primary ml-5"
+                  onClick={() => {
+                    setShowBuilderDrawer(true);
+                  }}
+                >
+                  Customize
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

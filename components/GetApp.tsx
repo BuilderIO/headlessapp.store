@@ -265,13 +265,16 @@ export function GetApp(props: {
           }}
           className="bg-white p-12 shadow-2xl z-10 fixed bottom-0 left-0 right-0 top-16"
         >
+          <div className="absolute top-0 left-0 items-center justify-center flex h-full w-full opacity-60">
+            Loading...
+          </div>
           <Show when={loadBuilder}>
             <BuilderEditor
               class="absolute top-0 right-0 bottom-0 left-0 width-full"
               onChange={(e: CustomEvent) => {
                 privateState.latestBuilderJson = e.detail;
               }}
-              data={showBuilderDrawer && builderJson}
+              data={builderJson}
               options={builderOptions}
               env={builderEnvParam || undefined}
             />

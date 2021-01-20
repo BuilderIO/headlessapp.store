@@ -41,7 +41,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
           className="text-link"
           rel="nooppener"
           target="_blank"
-          href="https://www.builder.io"
+          href="https://github.com/BuilderIO/jsx-lite"
         >
           JSX Lite
         </a>
@@ -50,7 +50,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
           className="text-link"
           rel="nooppener"
           target="_blank"
-          href="https://www.builder.io"
+          href="https://github.com/vercel/next.js/"
         >
           Next.js
         </a>
@@ -59,7 +59,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
           className="text-link"
           rel="nooppener"
           target="_blank"
-          href="https://www.builder.io"
+          href="https://github.com/tailwindlabs/tailwindcss"
         >
           TailwindCSS
         </a>
@@ -68,7 +68,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
           className="text-link"
           rel="nooppener"
           target="_blank"
-          href="https://www.builder.io"
+          href="https://vercel.com/"
         >
           Vercel
         </a>
