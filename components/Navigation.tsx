@@ -3,7 +3,7 @@ import ActiveLink from "./ActiveLink";
 
 const Navigation = () => {
   return (
-    <nav className="max-w-5xl mx-auto">
+    <nav className="max-w-7xl mx-auto bg-primary p-6 md:p-8">
       <div className="flex flex-wrap items-center text-gray-500">
         <div className="px-6 flex items-center justify-between md:justify-start md:flex-1">
           <nav className="flex items-center md:border-gray-200 md:pl-6 md:ml-6 space-x-3">

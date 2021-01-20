@@ -188,8 +188,8 @@ export function GetApp(props: { app: AppInfo }) {
                 ? "typescript"
                 : "html"
             }
-            height="500px"
-            className="bg-gray-800 rounded"
+            height="50vh"
+            className="bg-gray-800 rounded m-6 pt-2"
             options={{ readOnly: true, minimap: { enabled: false } }}
             value={output}
           />
