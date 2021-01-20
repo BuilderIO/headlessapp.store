@@ -114,9 +114,9 @@ export function GetApp(props: { app: AppInfo }) {
                 onClick={() => {
                   setActiveTemplate(index);
                 }}
-                className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+                className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none ${
                   isActive
-                    ? "text-blue-500 border-b-2 font-medium border-blue-500"
+                    ? "text-primary border-b-2 font-medium border-primary"
                     : ""
                 }`}
               >
@@ -159,9 +159,9 @@ export function GetApp(props: { app: AppInfo }) {
               onClick={() => {
                 setOutputTab(lowerName);
               }}
-              className={`text-gray-600 whitespace-nowrap py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+              className={`text-gray-600 whitespace-nowrap py-4 px-6 block hover:text-primary focus:outline-none ${
                 isActive
-                  ? "text-blue-500 border-b-2 font-medium border-blue-500"
+                  ? "text-primary border-b-2 font-medium border-primary"
                   : ""
               }`}
             >

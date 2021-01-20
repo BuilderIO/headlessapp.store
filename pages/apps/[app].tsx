@@ -29,9 +29,14 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
         }
       `}</style>
 
-      <div className="p-5 bg-white">
+      <div className="p-8 bg-white">
         <h2 className="text-6xl">{app?.data.title}</h2>
-        <p>{app?.data.subtitle}</p>
+        <p className="text-gray-700 mt-3">{app?.data.subtitle}</p>
+
+        <div className="flex-row  mt-5">
+          <button className="btn-primary">Get app</button>
+          <button className="text-primary ml-5">Customize</button>
+        </div>
       </div>
 
       {app && <GetApp app={app} />}

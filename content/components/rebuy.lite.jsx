@@ -21,7 +21,7 @@ export default function MyComponent() {
         onChange={(event) => (state.newItemName = event.target.value)}
       />
       <button
-        class="bg-blue-500 rounded w-full text-white font-bold py-2 px-4 "
+        class="bg-primary rounded w-full text-white font-bold py-2 px-4 "
         css={{ margin: "10px 0" }}
         onClick={() => state.addItem()}
       >
