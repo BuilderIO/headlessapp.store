@@ -10,8 +10,10 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head />
-        <body>
-          <Main />
+        <body className="bg-offwhite">
+          <div className="container mx-auto">
+            <Main />
+          </div>
           <NextScript />
           <script async src="https://cdn.builder.io/js/fiddle"></script>
         </body>

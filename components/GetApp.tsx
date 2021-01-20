@@ -43,16 +43,16 @@ if (typeof window !== "undefined") {
 
 export function GetApp(props: { app: AppInfo }) {
   const { app } = props;
-  const [code, setCode] = useState(app?.data.code || "");
+  const [code, setCode] = useState("");
   const [builderJson, setBuilderJson] = useState(null as any);
   const [outputTab, setOutputTab] = useState("react");
   const [output, setOutput] = useState("");
+  const [activeTemplate, setActiveTemplate] = useState(0);
 
   useEffect(() => {
-    if (app?.data.code) {
-      setCode(app.data.code);
-    }
-  }, [app?.data.code]);
+    const code = app?.data.templates?.[activeTemplate]?.code;
+    setCode(code || "");
+  }, [app?.data, activeTemplate]);
 
   useEffect(() => {
     if (!code) {
@@ -104,72 +104,96 @@ export function GetApp(props: { app: AppInfo }) {
 
   return (
     <div>
-      <div
-        style={{
-          position: "relative",
-          transform: "scale(0.8)",
-          top: "-10%",
-        }}
-      >
-        <Show when={builderJson}>
-          <BuilderComponent content={builderJson} />
-        </Show>
-      </div>
-      <nav className="flex flex-col sm:flex-row border-l border-gray-200  overflow-auto">
-        {[
-          "React",
-          "Vue",
-          "Svelte",
-          "Solid",
-          "Angular",
-          "HTML",
-          "React Native",
-          "Swift",
-          "Webcomponents",
-        ].map((name, index) => {
-          const lowerName = name.toLowerCase();
-          const isActive = lowerName === outputTab;
-          return (
-            <React.Fragment key={index}>
+      <div>
+        <nav className="flex flex-col sm:flex-row overflow-auto">
+          {app?.data.templates?.map(({ name }, index) => {
+            const isActive = index === activeTemplate;
+            return (
               <button
+                key={index}
                 onClick={() => {
-                  setOutputTab(lowerName);
+                  setActiveTemplate(index);
                 }}
-                className={`text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+                className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none ${
                   isActive
                     ? "text-blue-500 border-b-2 font-medium border-blue-500"
                     : ""
                 }`}
-                style={{
-                  whiteSpace: "nowrap",
-                }}
               >
                 {name}
               </button>
-            </React.Fragment>
+            );
+          })}
+        </nav>
+        <div
+          className="bg-offwhite p-5"
+          style={{
+            height: "40vh",
+            maxHeight: "60vh",
+            minHeight: "200px",
+          }}
+        >
+          <Show when={builderJson}>
+            <BuilderComponent content={builderJson} />
+          </Show>
+        </div>
+      </div>
+      <nav className="flex flex-col sm:flex-row overflow-auto">
+        {[
+          "Builder",
+          "React",
+          "Vue",
+          "Angular",
+          "Liquid",
+          "Svelte",
+          "Solid",
+          "HTML",
+          "Webcomponents",
+          "JSX Lite",
+        ].map((name, index) => {
+          const lowerName = name.toLowerCase();
+          const isActive = lowerName === outputTab;
+          return (
+            <button
+              key={index}
+              onClick={() => {
+                setOutputTab(lowerName);
+              }}
+              className={`text-gray-600 whitespace-nowrap py-4 px-6 block hover:text-blue-500 focus:outline-none ${
+                isActive
+                  ? "text-blue-500 border-b-2 font-medium border-blue-500"
+                  : ""
+              }`}
+            >
+              {name}
+            </button>
           );
         })}
       </nav>
-      <div className="bg-gray-800">
-        <MonacoEditor
-          theme="vs-dark"
-          language={
-            outputTab === "swift"
-              ? "swift"
-              : outputTab === "json" || outputTab === "builder"
-              ? "json"
-              : outputTab === "react" ||
-                outputTab === "react native" ||
-                outputTab === "angular" ||
-                outputTab === "webcomponents" ||
-                outputTab === "solid"
-              ? "typescript"
-              : "html"
-          }
-          height="500px"
-          options={{ readOnly: true, minimap: { enabled: false } }}
-          value={output}
-        />
+      <div className="grid grid-cols-2 gap-4">
+        <div>How to</div>
+        <div>
+          <MonacoEditor
+            theme="vs-dark"
+            language={
+              outputTab === "swift"
+                ? "swift"
+                : outputTab === "json" || outputTab === "builder"
+                ? "json"
+                : outputTab === "react" ||
+                  outputTab === "react native" ||
+                  outputTab === "angular" ||
+                  outputTab === "webcomponents" ||
+                  outputTab === "solid"
+                ? "typescript"
+                : "html"
+            }
+            height="500px"
+            className="bg-gray-800 rounded"
+            options={{ readOnly: true, minimap: { enabled: false } }}
+            value={output}
+          />
+        </div>
       </div>
     </div>
   );

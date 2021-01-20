@@ -1,8 +1,12 @@
 export type AppInfo = {
   data: {
     handle: string;
-    code: string;
     title: string;
+    image: string;
     subtitle: string;
+    templates: {
+      code: string;
+      name: string;
+    }[];
   };
 };

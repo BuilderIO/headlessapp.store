@@ -8,13 +8,13 @@ type Props = {
 };
 
 const Layout = ({ children, title = "This is the default title" }: Props) => (
-  <div className="bg-white">
+  <div>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header className="pt-6 md:pt-8">
+    <header className="p-6 md:p-8">
       <Navigation />
     </header>
     {children}

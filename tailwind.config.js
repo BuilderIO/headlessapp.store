@@ -10,7 +10,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+        sans: ["Avenir", ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        primary: "#5c6ac4",
+        secondary: "#ecc94b",
+        offwhite: '#F4F3E9'
+        // ...
       },
     },
   },

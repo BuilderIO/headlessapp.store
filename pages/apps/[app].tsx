@@ -3,7 +3,6 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { GetApp } from "../../components/GetApp";
 import Layout from "../../components/Layout";
-import { Show } from "../../components/show";
 import { AppInfo } from "../../interfaces/app";
 
 type Props = {
@@ -16,22 +15,22 @@ const StaticPropsDetail = ({ app, errors }: Props) => {
     return (
       <Layout title="Error | Next.js + TypeScript Example">
         <p>
-          <span style={{ color: "red" }}>Error:</span> {errors}
+          <span className="text-red-800">Error:</span> {errors}
         </p>
       </Layout>
     );
   }
 
   return (
-    <Layout title="What a cool component">
+    <Layout title={`${app?.data?.title || ""} | HeadlessApp.Store`}>
       <style>{`
         .monaco-editor .margin, .monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input {
           background-color: transparent !important;
         }
       `}</style>
 
-      <div className="p-5 prose">
-        <h2 className="text-gray-100">{app?.data.title}</h2>
+      <div className="p-5 bg-white">
+        <h2 className="text-6xl">{app?.data.title}</h2>
         <p>{app?.data.subtitle}</p>
       </div>
 
