@@ -131,6 +131,8 @@ export function GetApp(props: {
           ? JSON.stringify(json, null, 2)
           : outputTab === "builder"
           ? JSON.stringify(componentToBuilder(json), null, 2)
+          : outputTab === "jsx lite"
+          ? componentToJsxLite(json)
           : componentToVue(json)
       );
     } catch (err) {
@@ -188,6 +190,7 @@ export function GetApp(props: {
           "HTML",
           "Webcomponents",
           "JSX Lite",
+          "JSON",
         ].map((name, index) => {
           const lowerName = name.toLowerCase();
           const isActive = lowerName === outputTab;
@@ -219,6 +222,7 @@ export function GetApp(props: {
                 : outputTab === "json" || outputTab === "builder"
                 ? "json"
                 : outputTab === "react" ||
+                  outputTab === "jsx lite" ||
                   outputTab === "react native" ||
                   outputTab === "angular" ||
                   outputTab === "webcomponents" ||

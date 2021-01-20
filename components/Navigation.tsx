@@ -6,7 +6,7 @@ const SHOW_DISCOVER_LINK = false;
 
 const Navigation = () => {
   return (
-    <nav className="mx-auto bg-primary p-6 md:p-8 full-width">
+    <nav className="mx-auto bg-primary p-4 full-width">
       <div className="flex flex-wrap items-center text-white container mx-auto">
         <div className="px-6 flex items-center justify-between md:justify-start md:flex-1">
           <nav className="flex items-center md:border-gray-200 md:pl-6 md:ml-6 space-x-3">
