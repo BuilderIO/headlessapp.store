@@ -233,6 +233,7 @@ export function GetApp(props: {
             height="50vh"
             className="bg-gray-800 rounded pt-2 shadow-lg"
             onChange={(_event, value) => {
+              console.log('change?')
               setCode(value || '');
             }}
             options={{
