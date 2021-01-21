@@ -441,10 +441,10 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.0.tgz#6c9eafc78c1529248f8f4d92b0799a712b6052c6"
   integrity sha512-i9YbZPN3QgfighY/1X1Pu118VUz2Fmmhd6b2n0/O8YVgGGfw0FbUYoA97k7FkpGJ+pLCFEDLUmAPPV4D1kpeFw==
 
-"@jsx-lite/core@^0.0.4-17":
-  version "0.0.4-17"
-  resolved "https://registry.yarnpkg.com/@jsx-lite/core/-/core-0.0.4-17.tgz#023bb5194533904177f76fc1cb7573e0f9dbcc40"
-  integrity sha512-mHfv0l7EVQbfFrKQLjd9+Oc3vULJj0zBD4iBS8gcMTgFynAM3z4J9MHWc651oMIiU4OWaTbIQ9yULgCe5t1fCw==
+"@jsx-lite/core@^0.0.4-21":
+  version "0.0.4-21"
+  resolved "https://registry.yarnpkg.com/@jsx-lite/core/-/core-0.0.4-21.tgz#9af347c1179643ca0ac0845fb9e6984960dde8e7"
+  integrity sha512-I9G+LcG7qipxHOFqYM8T7R+2ZVjxy8Hb7XIhhMR1Vmc6AeptITGwA4fTcXa87toX8x55NLjM+RoN50KfdDuakA==
   dependencies:
     "@babel/core" "^7.12.3"
     "@babel/plugin-syntax-decorators" "^7.12.1"

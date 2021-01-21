@@ -13,7 +13,7 @@ module.exports = {
         sans: ["Avenir", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: "#5c6ac4",
+        primary: "#365C42",
         secondary: "#ecc94b",
         offwhite: '#F4F3E9'
         // ...

@@ -110,8 +110,8 @@ export function GetApp(props: {
           ? componentToCustomElement(json)
           : outputTab === "react"
           ? componentToReact(json, {
-              // stylesType: state.options.reactStyleType,
-              // stateType: state.options.reactStateType,
+              stylesType: "styled-components",
+              stateType: "useState",
             })
           : outputTab === "swift"
           ? componentToSwift(json)
@@ -267,7 +267,7 @@ export function GetApp(props: {
             transition: "transform 0.2s ease-in-out, opacity 0.2s ease-in-out",
             pointerEvents: showBuilderDrawer ? "auto" : "none",
           }}
-          className="bg-white p-12 shadow-2xl z-10 fixed bottom-0 left-0 right-0 top-16"
+          className="bg-white p-12 shadow-2xl z-10 fixed bottom-0 left-0 right-0 top-1/6"
         >
           <div className="absolute top-0 left-0 items-center justify-center flex h-full w-full opacity-60">
             Loading...
