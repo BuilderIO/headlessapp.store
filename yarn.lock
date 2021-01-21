@@ -304,12 +304,12 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@builder.io/react@^1.1.31":
-  version "1.1.31"
-  resolved "https://registry.yarnpkg.com/@builder.io/react/-/react-1.1.31.tgz#f735221ef1a9d646d8d8599611243d3427ed6bb8"
-  integrity sha512-ndxrwmOZhXc+7QbsiP8XpT5YpUqOIZWsxrsVfB4nrpePTZwvsewxUQOObmDf7RjqEl35L4tLjsotnbTILYNrIQ==
+"@builder.io/react@^1.1.32-alpha.11":
+  version "1.1.32-alpha.11"
+  resolved "https://registry.yarnpkg.com/@builder.io/react/-/react-1.1.32-alpha.11.tgz#f191e3365fb848ba017fedba70b3b0d78198455e"
+  integrity sha512-MKBSkskeC6wTeDqHaNv+PuzUGbrdpKafv4OvZKql1kMN++2xm4hpHn5jF4KXEoyx12CU3V8u4SvYk7P4+E3afQ==
   dependencies:
-    "@builder.io/sdk" "^1.1.20"
+    "@builder.io/sdk" "^1.1.21-alpha.0"
     "@emotion/core" "^10.0.17"
     hash-sum "^2.0.0"
     preact "^10.1.0"
@@ -322,10 +322,10 @@
     node-fetch "^2.3.0"
     prop-types "^15.7.2"
 
-"@builder.io/sdk@^1.1.20":
-  version "1.1.20"
-  resolved "https://registry.yarnpkg.com/@builder.io/sdk/-/sdk-1.1.20.tgz#04fa6bc81ae7421f4527e5aa928b784a1b295eed"
-  integrity sha512-shT9+K4O7pKrfmd8cpi+AuALZMxGw5sSZkLqg0jI5o0MrjRrTRU4e5by3sBUHP68JUtpV2UEuCD1cODhaAs3EQ==
+"@builder.io/sdk@^1.1.21-alpha.0":
+  version "1.1.21-alpha.2"
+  resolved "https://registry.yarnpkg.com/@builder.io/sdk/-/sdk-1.1.21-alpha.2.tgz#054396277ba4d5e4b286f9d8037f7d6e481423d1"
+  integrity sha512-62ltHogmsh1NOyoR+WKV6iZ1wkdxr399IJIvpziyeWfMbri1jBB7945/AIlvzmxt9jNpdn/KO7pWMVi6TVxBFg==
   dependencies:
     hash-sum "^2.0.0"
     node-fetch "^2.2.0"

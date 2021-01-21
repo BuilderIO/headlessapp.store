@@ -9,7 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@builder.io/react": "^1.1.31",
+    "@builder.io/react": "^1.1.32-alpha.11",
     "@jsx-lite/core": "^0.0.4-21",
     "@monaco-editor/react": "^3.7.1",
     "@tailwindcss/typography": "^0.3.1",

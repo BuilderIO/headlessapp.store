@@ -190,7 +190,7 @@ export function GetApp(props: {
           "HTML",
           "Webcomponents",
           "JSX Lite",
-          "JSON",
+          // "JSON",
         ].map((name, index) => {
           const lowerName = name.toLowerCase();
           const isActive = lowerName === outputTab;
@@ -232,7 +232,13 @@ export function GetApp(props: {
             }
             height="50vh"
             className="bg-gray-800 rounded pt-2 shadow-lg"
-            options={{ readOnly: true, minimap: { enabled: false } }}
+            onChange={(_event, value) => {
+              setCode(value || '');
+            }}
+            options={{
+              readOnly: outputTab !== "jsx lite",
+              minimap: { enabled: false },
+            }}
             value={output}
           />
         </div>
