@@ -5,6 +5,8 @@ import { GetApp } from "../../components/GetApp";
 import Layout from "../../components/Layout";
 import { AppInfo } from "../../interfaces/app";
 
+builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
+
 type Props = {
   app?: AppInfo;
   errors?: string;
