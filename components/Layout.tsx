@@ -7,6 +7,7 @@ type Props = {
   title?: string;
   ogImage?: string;
   description?: string;
+  hideHeaderAndFooter?: boolean;
 };
 
 const Layout = ({
@@ -14,6 +15,7 @@ const Layout = ({
   title = "HeadlessApp.Store | Blazing fast ecommerce integrations",
   ogImage = "/assets/new-one.png",
   description = "Request early access now",
+  hideHeaderAndFooter = false,
 }: Props) => (
   <div>
     <Head>
@@ -26,66 +28,72 @@ const Layout = ({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
     </Head>
-    <header>
-      <Navigation />
-    </header>
+    {!hideHeaderAndFooter && (
+      <>
+        <header>
+          <Navigation />
+        </header>
+      </>
+    )}
     {children}
-    <footer className="text-center p-16">
-      <div className="text-lg">
-        Made with ❤️ by{" "}
-        <a
-          className="text-link"
-          target="_blank"
-          rel="nooppener"
-          href="https://www.builder.io"
-        >
-          Builder.io
-        </a>
-        .
-      </div>
-      <div className="mt-3">
-        Built with{" "}
-        <a className="text-link" href="https://www.builder.io">
-          Builder.io
-        </a>
-        ,{" "}
-        <a
-          className="text-link"
-          rel="nooppener"
-          target="_blank"
-          href="https://github.com/BuilderIO/jsx-lite"
-        >
-          JSX Lite
-        </a>
-        ,{" "}
-        <a
-          className="text-link"
-          rel="nooppener"
-          target="_blank"
-          href="https://github.com/vercel/next.js/"
-        >
-          Next.js
-        </a>
-        ,{" "}
-        <a
-          className="text-link"
-          rel="nooppener"
-          target="_blank"
-          href="https://github.com/tailwindlabs/tailwindcss"
-        >
-          TailwindCSS
-        </a>
-        . Hosted by{" "}
-        <a
-          className="text-link"
-          rel="nooppener"
-          target="_blank"
-          href="https://vercel.com/"
-        >
-          Vercel
-        </a>
-      </div>
-    </footer>
+    {!hideHeaderAndFooter && (
+      <footer className="text-center p-16">
+        <div className="text-lg">
+          Made with ❤️ by{" "}
+          <a
+            className="text-link"
+            target="_blank"
+            rel="nooppener"
+            href="https://www.builder.io"
+          >
+            Builder.io
+          </a>
+          .
+        </div>
+        <div className="mt-3">
+          Built with{" "}
+          <a className="text-link" href="https://www.builder.io">
+            Builder.io
+          </a>
+          ,{" "}
+          <a
+            className="text-link"
+            rel="nooppener"
+            target="_blank"
+            href="https://github.com/BuilderIO/jsx-lite"
+          >
+            JSX Lite
+          </a>
+          ,{" "}
+          <a
+            className="text-link"
+            rel="nooppener"
+            target="_blank"
+            href="https://github.com/vercel/next.js/"
+          >
+            Next.js
+          </a>
+          ,{" "}
+          <a
+            className="text-link"
+            rel="nooppener"
+            target="_blank"
+            href="https://github.com/tailwindlabs/tailwindcss"
+          >
+            TailwindCSS
+          </a>
+          . Hosted by{" "}
+          <a
+            className="text-link"
+            rel="nooppener"
+            target="_blank"
+            href="https://vercel.com/"
+          >
+            Vercel
+          </a>
+        </div>
+      </footer>
+    )}
   </div>
 );
 
