@@ -5,14 +5,26 @@ import Navigation from "./Navigation";
 type Props = {
   children?: ReactNode;
   title?: string;
+  ogImage?: string;
+  description?: string;
 };
 
-const Layout = ({ children, title = "This is the default title" }: Props) => (
+const Layout = ({
+  children,
+  title = "HeadlessApp.Store | Blazing fast ecommerce integrations",
+  ogImage = "/assets/default-og-image.png",
+  description = "Request early access now",
+}: Props) => (
   <div>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={ogImage} />
     </Head>
     <header>
       <Navigation />
