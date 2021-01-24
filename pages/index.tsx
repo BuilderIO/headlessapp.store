@@ -7,16 +7,16 @@ export const Index = () => (
   >
     <div className="m-auto w-11/12 max-w-4xl flex-col flex">
       <Image
-        src="/assets/teaser-logo.png"
-        width="1436"
-        height="428"
+        src="/assets/new-one.png"
+        width="2490"
+        height="1182"
         alt="logo"
       />
 
       <a
         rel="noreferrer"
         href="mailto:goheadless@builder.io?subject=Please%20add%20me%20to%20the%20waitlist%20for%20HeadlessApp.Store&body=Thanks!"
-        className="text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded mt-8"
+        className="text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded"
       >
         Request early access
       </a>

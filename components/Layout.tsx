@@ -12,7 +12,7 @@ type Props = {
 const Layout = ({
   children,
   title = "HeadlessApp.Store | Blazing fast ecommerce integrations",
-  ogImage = "/assets/default-og-image.png",
+  ogImage = "/assets/new-one.png",
   description = "Request early access now",
 }: Props) => (
   <div>
