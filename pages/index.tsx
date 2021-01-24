@@ -17,7 +17,7 @@ export const Index = () => (
       </a>
       <a
         rel="noreferrer"
-        href="mailto:has-partners@builder.io?subject=Please%20add%20me%20to%20the%20waitlist%20for%20HeadlessApp.Store&body=Thanks!"
+        href="mailto:has-partners@builder.io"
         className="text-center text-offwhite block mx-auto px-6 py-4 border-offwhite opacity-50 rounded mt-4"
       >
         Request to be a partner
