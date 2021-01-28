@@ -166,9 +166,9 @@ export function GetApp(props: {
         <div
           className="bg-offwhite p-5"
           style={{
-            height: "40vh",
-            maxHeight: "60vh",
+            maxHeight: "70vh",
             minHeight: "200px",
+            overflow: "auto",
           }}
         >
           <Show when={builderJson}>
@@ -233,7 +233,6 @@ export function GetApp(props: {
             height="50vh"
             className="bg-gray-800 rounded pt-2 shadow-lg"
             onChange={(_event, value) => {
-              console.log("change?");
               setCode(value || "");
             }}
             options={{
