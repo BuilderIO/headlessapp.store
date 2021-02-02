@@ -68,6 +68,8 @@ export function GetApp(props: {
   const [code, setCode] = useState("");
   const [builderJson, setBuilderJson] = useState(null as any);
   const [outputTab, setOutputTab] = useState("react");
+  const [reactStateType, setReactStateType] = useState("useState");
+  const [reactStyleType, setReactStyleType] = useState("styled-jsx");
   const [output, setOutput] = useState("");
   const [activeTemplate, setActiveTemplate] = useState(0);
   const [loadBuilder, setLoadBuilder] = useState(false);
@@ -110,14 +112,14 @@ export function GetApp(props: {
           ? componentToCustomElement(json)
           : outputTab === "react"
           ? componentToReact(json, {
-              stylesType: "styled-components",
-              stateType: "useState",
+              stylesType: reactStyleType as any,
+              stateType: reactStateType as any,
             })
           : outputTab === "swift"
           ? componentToSwift(json)
           : outputTab === "react native"
           ? componentToReactNative(json, {
-              // stateType: state.options.reactStateType,
+              stateType: reactStateType as any,
             })
           : outputTab === "solid"
           ? componentToSolid(json)
@@ -125,7 +127,7 @@ export function GetApp(props: {
           ? componentToAngular(json)
           : outputTab === "svelte"
           ? componentToSvelte(json, {
-              // stateType: state.options.svelteStateType,
+              stateType: "variables",
             })
           : outputTab === "json"
           ? JSON.stringify(json, null, 2)
@@ -138,7 +140,7 @@ export function GetApp(props: {
     } catch (err) {
       console.warn(err);
     }
-  }, [code, outputTab]);
+  }, [code, outputTab, reactStateType, reactStyleType]);
 
   return (
     <div>
@@ -214,6 +216,48 @@ export function GetApp(props: {
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-2">How to</div>
         <div className="m-6 col-span-4">
+          {outputTab === "react" && (
+            <div className="grid grid-cols-2 gap-4 pb-4">
+              <div>
+                <label
+                  for="reactStateType"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  State Library
+                </label>
+                <select
+                  value={reactStateType}
+                  onChange={(e) => setReactStateType(e.target.value)}
+                  id="reactStateType"
+                  name="reactStateType"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="useState">useState</option>
+                  <option value="mobx">Mobx</option>
+                  <option value="solid">Solid</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="reactStyleType"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Style Library
+                </label>
+                <select
+                  value={reactStyleType}
+                  onChange={(e) => setReactStyleType(e.target.value)}
+                  id="reactStyleType"
+                  name="reactStyleType"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="styled-jsx">Styled JSX</option>
+                  <option value="styled-components">Styled Components</option>
+                  <option value="emotion">Emotion</option>
+                </select>
+              </div>
+            </div>
+          )}
           <MonacoEditor
             theme="vs-dark"
             language={
