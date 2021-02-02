@@ -227,7 +227,7 @@ export function GetApp(props: {
           <div className="grid grid-cols-6 gap-16">
             <div className="col-span-2 text-white flex flex-col">
               <Show when={outputTab === "builder"}>
-                <div className="m-auto flex flex-col items-stretch">
+                <div className="m-auto flex flex-col items-stretch text-center">
                   <div className="pb-6 mx-auto text-center mb-4">
                     <Image
                       className="object-contain"
@@ -257,7 +257,7 @@ export function GetApp(props: {
                 </div>
               </Show>
               <Show when={outputTab === "jsx lite"}>
-                <div className="m-auto font-mono flex flex-col items-stretch">
+                <div className="m-auto font-mono flex flex-col items-stretch text-center">
                   <div className="pb-6 mx-auto text-center mb-4">
                     <Image
                       className="object-contain"
@@ -281,7 +281,7 @@ export function GetApp(props: {
                 </div>
               </Show>
               <Show when={outputTab !== "builder" && outputTab !== "jsx lite"}>
-                <div className="m-auto font-mono">
+                <div className="m-auto font-mono text-center">
                   <Show when={(LOGOS as any)[outputTab]}>
                     <div className="pb-6 mx-auto text-center mb-4">
                       <Image
