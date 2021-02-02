@@ -185,8 +185,10 @@ export function GetApp(props: {
                   onClick={() => {
                     setOutputTab(lowerName);
                   }}
-                  className={`text-white text-xs tracking-widest font-bold uppercase  whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
-                    isActive ? "bg-primary font-medium text-white" : ""
+                  className={` text-xs tracking-widest uppercase  whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
+                    isActive
+                      ? "bg-primary-light font-extrabold text-dark"
+                      : "bg-offwhite text-primary-dark font-bold"
                   }`}
                 >
                   {name}
