@@ -4,6 +4,10 @@ const withTM = require("next-transpile-modules")([
   // "monaco-editor"
 ]);
 
+const ONE_YEAR_IN_SECONDS = 959220000;
+
+const longCacheExtensions = ["jpg", "jpeg", "svg", "webp", "png"];
+
 module.exports = withPlugins([withTM], {
   images: {
     domains: ["cdn.builder.io"],
@@ -20,6 +24,20 @@ module.exports = withPlugins([withTM], {
 
     return config;
   },
+  async headers() {
+    return [
+      ...longCacheExtensions.map((ext) => ({
+        source: `/(.*).${ext}`,
+        headers: [
+          {
+            key: "Cache-Control",
+            value: `public, max-age=${ONE_YEAR_IN_SECONDS}, s-maxage=${ONE_YEAR_IN_SECONDS}, stale-while-revalidate=${ONE_YEAR_IN_SECONDS}`,
+          },
+        ],
+      })),
+    ];
+  },
+
   async redirects() {
     return [
       {

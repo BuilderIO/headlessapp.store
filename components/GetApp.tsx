@@ -24,6 +24,14 @@ import { BuilderContent } from "@builder.io/sdk";
 import { adapt } from "webcomponents-in-react";
 import { Portal } from "react-portal";
 import { getQueryParam } from "./functions/get-query-param";
+import Image from "next/image";
+
+const LOGOS = {
+  builder:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fb37b605163314875bd30995d7d3d7f88",
+  "jsx lite":
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Ff028acdb0af4483a9d93433d30271c6c",
+};
 
 const BuilderEditor = adapt("builder-editor");
 
@@ -168,6 +176,7 @@ export function GetApp(props: {
           >
             {[
               "Builder",
+              "JSX Lite",
               "React",
               "Vue",
               "Angular",
@@ -175,7 +184,6 @@ export function GetApp(props: {
               "Solid",
               "HTML",
               "Webcomponents",
-              "JSX Lite",
               // "JSON",
             ].map((name, index) => {
               const lowerName = name.toLowerCase();
@@ -190,6 +198,10 @@ export function GetApp(props: {
                     isActive
                       ? "bg-primary-light font-extrabold text-dark"
                       : "bg-offwhite text-primary-dark font-bold"
+                  } ${
+                    lowerName === "jsx lite"
+                      ? " border-primary-dark border-r-2"
+                      : ""
                   }`}
                 >
                   {name}
@@ -200,34 +212,57 @@ export function GetApp(props: {
           <div className="grid grid-cols-6 gap-16">
             <div className="col-span-2 text-white flex flex-col">
               <Show when={outputTab === "builder"}>
-                <div className="m-auto">
-                  <div>
+                <div className="m-auto flex flex-col items-stretch">
+                  <div className="pb-6 mx-auto">
+                    <Image
+                      className="object-contain"
+                      width="auto"
+                      height="80"
+                      src={LOGOS.builder}
+                    />
+                  </div>
+                  <div className="text-lg pb-4">
                     Visually install, edit, a/b test, personalize, and publish
-                    this app remotely with Builder.io. <br />
-                    <br />
-                    No more copy and pasting or site deploys just to update
-                    layouts and copy
+                    this app remotely with Builder.io.
                   </div>
                   <a
                     target="_blank"
                     rel="noopenner"
                     href={`https://builder.io/login?installHasApp=${app.id}`}
-                    className="font-sans text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded cursor-pointer mt-8"
+                    className="font-sans text-center text-offwhite block px-6 py-4 border-offwhite border-2 rounded cursor-pointer mt-8"
                   >
                     Install with Builder.io
                   </a>
                   <a
                     onClick={props.onShowBuilderDrawer}
-                    className="text-center text-offwhite block mx-auto px-6 py-2 border-offwhite opacity-70 rounded mt-4 cursor-pointer"
+                    className="text-center text-offwhite block px-6 py-2 border-offwhite opacity-70 rounded mt-4 cursor-pointer"
                   >
-                    Edit with Builder
+                    Edit with Builder.io
                   </a>
                 </div>
               </Show>
               <Show when={outputTab === "jsx lite"}>
-                <div className="m-auto font-mono">
-                  Edit the code to the right to update all of the generated code
-                  in the other tabs!
+                <div className="m-auto font-mono flex flex-col items-stretch">
+                  <div className="pb-6 mx-auto">
+                    <Image
+                      className="object-contain"
+                      width="auto"
+                      height="80"
+                      src={LOGOS["jsx lite"]}
+                    />
+                  </div>
+                  <div>
+                    Edit the code to the right to update all of the generated
+                    code in the other tabs!
+                  </div>
+                  <a
+                    rel="noopenner"
+                    target="_blank"
+                    href="https://github.com/builderio/jsx-lite"
+                    className="text-center text-offwhite block mx-auto px-6 py-2 border-offwhite opacity-70 rounded mt-4 cursor-pointer"
+                  >
+                    Learn more
+                  </a>
                 </div>
               </Show>
               <Show when={outputTab !== "builder" && outputTab !== "jsx lite"}>
@@ -391,7 +426,9 @@ export function GetApp(props: {
           </div>
           <Show when={loadBuilder}>
             <div className="absolute top-0 right-0 left-0 bg-offwhite text-center border-b border-gray-80">
-              <div className="p-4 font-bold uppercase tracking-widest">Edit in Builder.io</div>
+              <div className="p-4 font-bold uppercase tracking-widest">
+                Edit in Builder.io
+              </div>
             </div>
             <BuilderEditor
               class="absolute top-15 right-0 bottom-0 left-0 width-full"
