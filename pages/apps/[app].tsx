@@ -97,6 +97,7 @@ const AppPage = ({ app, errors }: Props) => {
           activeTemplate={activeTemplate}
           onCloseDrawer={() => setShowBuilderDrawer(false)}
           showBuilderDrawer={showBuilderDrawer}
+          onShowBuilderDrawer={() => setShowBuilderDrawer(true)}
           app={app}
         />
       )}

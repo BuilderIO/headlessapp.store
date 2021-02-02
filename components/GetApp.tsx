@@ -60,6 +60,7 @@ export function GetApp(props: {
   showBuilderDrawer?: boolean;
   onCloseDrawer: () => void;
   activeTemplate?: number;
+  onShowBuilderDrawer: () => void;
 }) {
   // For direct mutation without triggering a rerender (mostly for performance)
   const [privateState] = useState({
@@ -214,6 +215,12 @@ export function GetApp(props: {
                     className="font-sans text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded cursor-pointer mt-8"
                   >
                     Install with Builder.io
+                  </a>
+                  <a
+                    onClick={props.onShowBuilderDrawer}
+                    className="text-center text-offwhite block mx-auto px-6 py-2 border-offwhite opacity-70 rounded mt-4 cursor-pointer"
+                  >
+                    Edit with Builder
                   </a>
                 </div>
               </Show>
@@ -383,14 +390,23 @@ export function GetApp(props: {
             Loading Builder.io visual editor...
           </div>
           <Show when={loadBuilder}>
+            <div className="absolute top-0 right-0 left-0 bg-offwhite text-center border-b border-gray-80">
+              <div className="p-4 font-bold uppercase tracking-widest">Edit in Builder.io</div>
+            </div>
             <BuilderEditor
-              class="absolute top-0 right-0 bottom-0 left-0 width-full"
+              class="absolute top-15 right-0 bottom-0 left-0 width-full"
               onChange={(e: CustomEvent) => {
                 privateState.latestBuilderJson = e.detail;
               }}
               data={builderJson}
               options={builderOptions}
-              env={builderEnvParam || undefined}
+              env={
+                builderEnvParam ||
+                (Builder.isBrowser &&
+                  window.location.hostname === "localhost" &&
+                  "dev") ||
+                undefined
+              }
             />
           </Show>
         </div>
