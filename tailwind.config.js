@@ -13,7 +13,11 @@ module.exports = {
         sans: ["Avenir", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: "#365C42",
+        primary: {
+          dark: 'rgb(34, 53, 41)',
+          DEFAULT: '#365C42',
+          light: '#7eb790',
+        },
         secondary: "#ecc94b",
         offwhite: "#F4F3E9",
         dark: "#0E201A",

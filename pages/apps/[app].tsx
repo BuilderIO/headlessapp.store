@@ -14,6 +14,7 @@ type Props = {
 
 const AppPage = ({ app, errors }: Props) => {
   const [showBuilderDrawer, setShowBuilderDrawer] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState(0);
 
   if (errors) {
     return (
@@ -33,7 +34,7 @@ const AppPage = ({ app, errors }: Props) => {
         }
       `}</style>
 
-      <div className="p-16 bg-white shadow-md full-width">
+      <div className="p-16 bg-white shadow-md full-width pb-0">
         <div className="container mx-auto">
           <div className="flex">
             <img
@@ -45,11 +46,19 @@ const AppPage = ({ app, errors }: Props) => {
               <p className="text-gray-700 mt-6">{app?.data.subtitle}</p>
 
               <div className="flex-row mt-10">
-                <a href="#get-app-code" className="btn-primary-lg">
+                <a
+                  onClick={() => {
+                    document.getElementById("get-app-code")?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
+                  className="bg-gradient-to-r from-dark to-primary rounded-full text-white font-semibold py-4 px-8 cursor-pointer uppercase tracking-widest"
+                >
                   Get app
                 </a>
                 <button
-                  className="text-primary ml-5"
+                  className="text-primary ml-5 tracking-widest uppercase font-bold"
                   onClick={() => {
                     setShowBuilderDrawer(true);
                   }}
@@ -60,10 +69,32 @@ const AppPage = ({ app, errors }: Props) => {
             </div>
           </div>
         </div>
+
+        <nav className="flex justify-center flex-col sm:flex-row overflow-auto mt-16">
+          {app?.data.templates?.map(({ name }, index) => {
+            const isActive = index === activeTemplate;
+            return (
+              <button
+                key={index}
+                onClick={() => {
+                  setActiveTemplate(index);
+                }}
+                className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none uppercase tracking-widest font-bold ${
+                  isActive
+                    ? "text-primary border-b-2 font-medium border-primary"
+                    : ""
+                }`}
+              >
+                {name}
+              </button>
+            );
+          })}
+        </nav>
       </div>
 
       {app && (
         <GetApp
+          activeTemplate={activeTemplate}
           onCloseDrawer={() => setShowBuilderDrawer(false)}
           showBuilderDrawer={showBuilderDrawer}
           app={app}

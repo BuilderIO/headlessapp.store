@@ -1,12 +1,16 @@
+import Image from "next/image";
 import Link from "next/link";
 import ActiveLink from "./ActiveLink";
 
-const NAME = "JSX Lite Gallery"; // 'JSX Lite Gallery'
+const NAME = "Headless App Store";
+
+// Turn on when launched. Until then users can't easily find and navigate the list
+// of integrations
 const SHOW_DISCOVER_LINK = false;
 
 const Navigation = () => {
   return (
-    <nav className="mx-auto bg-primary p-4 full-width">
+    <nav className="mx-auto p-4 full-width bg-gradient-to-br from-dark to-primary">
       <div className="flex flex-wrap items-center text-white container mx-auto">
         <div className="px-6 flex items-center justify-between md:justify-start md:flex-1">
           <nav className="flex items-center md:border-gray-200 md:pl-6 md:ml-6 space-x-3">
@@ -20,7 +24,14 @@ const Navigation = () => {
           </nav>
         </div>
         <Link href="/">
-          <a className="text-xl">{NAME}</a>
+          <a className="text-xl">
+            <Image
+              className="object-contain object-center"
+              width="332"
+              height="44"
+              src="https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F911817f943d34d9e8d6c08b0769a4a23"
+            />
+          </a>
         </Link>
         <div className="hidden md:flex md:items-center md:text-right px-6 md:flex-1 justify-end">
           <a

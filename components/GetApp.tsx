@@ -59,6 +59,7 @@ export function GetApp(props: {
   app: AppInfo;
   showBuilderDrawer?: boolean;
   onCloseDrawer: () => void;
+  activeTemplate?: number;
 }) {
   // For direct mutation without triggering a rerender (mostly for performance)
   const [privateState] = useState({
@@ -71,7 +72,7 @@ export function GetApp(props: {
   const [reactStateType, setReactStateType] = useState("useState");
   const [reactStyleType, setReactStyleType] = useState("styled-jsx");
   const [output, setOutput] = useState("");
-  const [activeTemplate, setActiveTemplate] = useState(0);
+
   const [loadBuilder, setLoadBuilder] = useState(false);
 
   const builderEnvParam = Builder.isBrowser && getQueryParam("builderEnv");
@@ -88,9 +89,9 @@ export function GetApp(props: {
   }, [showBuilderDrawer, loadBuilder]);
 
   useEffect(() => {
-    const code = app?.data.templates?.[activeTemplate]?.code;
+    const code = app?.data.templates?.[props.activeTemplate!]?.code;
     setCode(code || "");
-  }, [app?.data, activeTemplate]);
+  }, [app?.data, props.activeTemplate]);
 
   useEffect(() => {
     if (!code) {
@@ -144,29 +145,9 @@ export function GetApp(props: {
 
   return (
     <div>
-      <div className="mt-8">
-        <nav className="flex justify-center flex-col sm:flex-row overflow-auto">
-          {app?.data.templates?.map(({ name }, index) => {
-            const isActive = index === activeTemplate;
-            return (
-              <button
-                key={index}
-                onClick={() => {
-                  setActiveTemplate(index);
-                }}
-                className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none ${
-                  isActive
-                    ? "text-primary border-b-2 font-medium border-primary"
-                    : ""
-                }`}
-              >
-                {name}
-              </button>
-            );
-          })}
-        </nav>
+      <div>
         <div
-          className="bg-offwhite p-5"
+          className="bg-offwhite p-15"
           style={{
             maxHeight: "70vh",
             minHeight: "200px",
@@ -178,132 +159,143 @@ export function GetApp(props: {
           </Show>
         </div>
       </div>
-      <nav
-        id="get-app-code"
-        className="flex flex-col sm:flex-row overflow-auto justify-center"
-      >
-        {[
-          "Builder",
-          "React",
-          "Vue",
-          "Angular",
-          "Svelte",
-          "Solid",
-          "HTML",
-          "Webcomponents",
-          "JSX Lite",
-          // "JSON",
-        ].map((name, index) => {
-          const lowerName = name.toLowerCase();
-          const isActive = lowerName === outputTab;
-          return (
-            <button
-              key={index}
-              onClick={() => {
-                setOutputTab(lowerName);
-              }}
-              className={`text-gray-600 whitespace-nowrap py-4 px-6 block hover:text-primary focus:outline-none ${
-                isActive
-                  ? "text-primary border-b-2 font-medium border-primary"
-                  : ""
-              }`}
-            >
-              {name}
-            </button>
-          );
-        })}
-      </nav>
-      <div className="grid grid-cols-6 gap-4">
-        <div className="col-span-2">How to</div>
-        <div className="m-6 col-span-4">
-          {outputTab === "react" && (
-            <div className="grid grid-cols-2 gap-4 pb-4">
-              <div>
-                <label
-                  for="reactStateType"
-                  className="block text-sm font-medium text-gray-700"
+      <div className="bg-gradient-to-br from-dark to-primary-dark full-width shadow-md text-white">
+        <div className="m-auto container w-full">
+          <nav
+            id="get-app-code"
+            className="flex flex-col sm:flex-row overflow-auto justify-center"
+          >
+            {[
+              "Builder",
+              "React",
+              "Vue",
+              "Angular",
+              "Svelte",
+              "Solid",
+              "HTML",
+              "Webcomponents",
+              "JSX Lite",
+              // "JSON",
+            ].map((name, index) => {
+              const lowerName = name.toLowerCase();
+              const isActive = lowerName === outputTab;
+              return (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setOutputTab(lowerName);
+                  }}
+                  className={`text-white whitespace-nowrap py-4 px-6 block hover:text-primary-light focus:outline-none ${
+                    isActive
+                      ? "text-primary-light border-b-2 font-medium border-primary-light"
+                      : ""
+                  }`}
                 >
-                  State Library
-                </label>
-                <select
-                  value={reactStateType}
-                  onChange={(e) => setReactStateType(e.target.value)}
-                  id="reactStateType"
-                  name="reactStateType"
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                >
-                  <option value="useState">useState</option>
-                  <option value="mobx">Mobx</option>
-                  <option value="solid">Solid</option>
-                </select>
-              </div>
-              <div>
-                <label
-                  for="reactStyleType"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Style Library
-                </label>
-                <select
-                  value={reactStyleType}
-                  onChange={(e) => setReactStyleType(e.target.value)}
-                  id="reactStyleType"
-                  name="reactStyleType"
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                >
-                  <option value="styled-jsx">Styled JSX</option>
-                  <option value="styled-components">Styled Components</option>
-                  <option value="emotion">Emotion</option>
-                </select>
+                  {name}
+                </button>
+              );
+            })}
+          </nav>
+          <div className="grid grid-cols-6 gap-4">
+            <div className="col-span-2 text-white flex flex-col">
+              <div className="m-auto font-mono">
+                Copy and paste this code into your project. Edit as needed.
               </div>
             </div>
-          )}
-          <MonacoEditor
-            theme="vs-dark"
-            language={
-              outputTab === "swift"
-                ? "swift"
-                : outputTab === "json" || outputTab === "builder"
-                ? "json"
-                : outputTab === "react" ||
-                  outputTab === "jsx lite" ||
-                  outputTab === "react native" ||
-                  outputTab === "angular" ||
-                  outputTab === "webcomponents" ||
-                  outputTab === "solid"
-                ? "typescript"
-                : "html"
-            }
-            height="50vh"
-            className="bg-gray-800 rounded pt-2 shadow-lg"
-            onChange={(_event, value) => {
-              setCode(value || "");
-            }}
-            options={{
-              readOnly: outputTab !== "jsx lite",
-              minimap: { enabled: false },
-            }}
-            value={output}
-          />
-          <div className="text-center mt-4">
-            {outputTab === "jsx lite" ? (
-              <>Edit the code above to update the preview and generate code!</>
-            ) : (
-              <>
-                Code generated by{" "}
-                <a
-                  target="_blank"
-                  className="text-primary font-bold"
-                  href="https://github.com/builderio/jsx-lite"
-                >
-                  JSX Lite
-                </a>
-              </>
-            )}
+            <div className="m-6 col-span-4">
+              {outputTab === "react" && (
+                <div className="grid grid-cols-2 gap-4 pb-4">
+                  <div>
+                    <label
+                      htmlFor="reactStateType"
+                      className="block text-xs opacity-70"
+                    >
+                      State Library
+                    </label>
+                    <select
+                      value={reactStateType}
+                      onChange={(e) => setReactStateType(e.target.value)}
+                      id="reactStateType"
+                      name="reactStateType"
+                      className="mt-1 bg-primary-dark block w-full pl-3 pr-10 py-2 text-base broder-primary-light focus:outline-none focus:ring-indigo-500 focus:border-primary sm:text-sm rounded-md"
+                    >
+                      <option value="useState">useState</option>
+                      <option value="mobx">Mobx</option>
+                      <option value="solid">Solid</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="reactStyleType"
+                      className="block text-xs opacity-70"
+                    >
+                      Style Library
+                    </label>
+                    <select
+                      value={reactStyleType}
+                      onChange={(e) => setReactStyleType(e.target.value)}
+                      id="reactStyleType"
+                      name="reactStyleType"
+                      className="mt-1 bg-primary-dark block w-full pl-3 pr-10 py-2 text-base broder-primary-light focus:outline-none focus:ring-indigo-500 focus:border-primary sm:text-sm rounded-md"
+                    >
+                      <option value="styled-jsx">Styled JSX</option>
+                      <option value="styled-components">
+                        Styled Components
+                      </option>
+                      <option value="emotion">Emotion</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+              <MonacoEditor
+                theme="vs-dark"
+                language={
+                  outputTab === "swift"
+                    ? "swift"
+                    : outputTab === "json" || outputTab === "builder"
+                    ? "json"
+                    : outputTab === "react" ||
+                      outputTab === "jsx lite" ||
+                      outputTab === "react native" ||
+                      outputTab === "angular" ||
+                      outputTab === "webcomponents" ||
+                      outputTab === "solid"
+                    ? "typescript"
+                    : "html"
+                }
+                height="50vh"
+                className="bg-dark rounded pt-2 shadow-lg"
+                onChange={(_event, value) => {
+                  setCode(value || "");
+                }}
+                options={{
+                  readOnly: outputTab !== "jsx lite",
+                  minimap: { enabled: false },
+                }}
+                value={output}
+              />
+              <div className="text-center mt-4">
+                {outputTab === "jsx lite" ? (
+                  <>
+                    Edit the code above to update the preview and generate code!
+                  </>
+                ) : (
+                  <>
+                    Code generated by{" "}
+                    <a
+                      target="_blank"
+                      className="text-primary-light font-bold"
+                      href="https://github.com/builderio/jsx-lite"
+                    >
+                      JSX Lite
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
       <Portal>
         <div
           className="fixed bg-black top-0 left-0 right-0 bottom-0"
