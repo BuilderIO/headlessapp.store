@@ -53,12 +53,12 @@ const AppPage = ({ app, errors }: Props) => {
                       block: "start",
                     });
                   }}
-                  className="bg-gradient-to-r from-dark to-primary rounded-full text-white font-semibold py-4 px-8 cursor-pointer uppercase tracking-widest"
+                  className="bg-gradient-to-r from-dark to-primary rounded-full text-white font-semibold py-6 px-10 cursor-pointer uppercase tracking-widest"
                 >
                   Get app
                 </a>
                 <button
-                  className="text-primary ml-5 tracking-widest uppercase font-bold"
+                  className="border-primary border-2 rounded-full text-primary font-semibold py-3 px-6 cursor-pointer uppercase tracking-widest ml-6"
                   onClick={() => {
                     setShowBuilderDrawer(true);
                   }}
