@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ActiveLink from "./ActiveLink";
 
-const NAME = "Headless App Store";
-
 // Turn on when launched. Until then users can't easily find and navigate the list
 // of integrations
 const SHOW_DISCOVER_LINK = false;
