@@ -15,12 +15,12 @@ const GridItem = ({ app }: { app: AppInfo }) => {
               <img
                 src={app.data.image}
                 className="object-center object-contain p-6"
-                style={{ width: "100%", height: 140 }}
+                style={{ width: "100%", height: 180 }}
               />
             ) : null}
           </div>
 
-          <div className="mt-12">
+          <div className="mt-6">
             <h3 className="text-xl leading-7 font-semibold ">
               {app.data.title}
             </h3>
