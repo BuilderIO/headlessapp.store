@@ -31,6 +31,20 @@ const LOGOS = {
     "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fb37b605163314875bd30995d7d3d7f88",
   "jsx lite":
     "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Ff028acdb0af4483a9d93433d30271c6c",
+  react:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2F10faa410dcd24f77a9d0f3208d3074df",
+  vue:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2F0b6e43efb489414ea0c31239b278308c",
+  angular:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2F91488e25b95a489eb32dc25e8adf3d0c",
+  solid:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2F5b73ceac3ac84801b4d303efdaf2ffa3",
+  html:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Ff9aa1f008e404b7181d8f7ef6d4e3b57",
+  webcomponents:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fb23612fe023642a9a8f402f3cbee7f68",
+  svelte:
+    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fc5693ddcb3f24ab8932b98df1786240c",
 };
 
 const BuilderEditor = adapt("builder-editor");
@@ -73,6 +87,7 @@ export function GetApp(props: {
   // For direct mutation without triggering a rerender (mostly for performance)
   const [privateState] = useState({
     latestBuilderJson: null as null | BuilderContent,
+    lastCode: "",
   });
   const { app } = props;
   const [code, setCode] = useState("");
@@ -107,11 +122,11 @@ export function GetApp(props: {
       return;
     }
     const json = parseJsx(code);
-    if (code) {
+    if (code && code !== privateState.lastCode) {
       const builderJson = componentToBuilder(json, { includeIds: true });
-      console.log({ builderJson });
       setBuilderJson(builderJson);
     }
+    privateState.lastCode = code;
     try {
       setOutput(
         outputTab === "liquid"
@@ -213,11 +228,11 @@ export function GetApp(props: {
             <div className="col-span-2 text-white flex flex-col">
               <Show when={outputTab === "builder"}>
                 <div className="m-auto flex flex-col items-stretch">
-                  <div className="pb-6 mx-auto">
+                  <div className="pb-6 mx-auto text-center mb-4">
                     <Image
                       className="object-contain"
                       width="auto"
-                      height="80"
+                      height="100"
                       src={LOGOS.builder}
                     />
                   </div>
@@ -243,11 +258,11 @@ export function GetApp(props: {
               </Show>
               <Show when={outputTab === "jsx lite"}>
                 <div className="m-auto font-mono flex flex-col items-stretch">
-                  <div className="pb-6 mx-auto">
+                  <div className="pb-6 mx-auto text-center mb-4">
                     <Image
                       className="object-contain"
                       width="auto"
-                      height="80"
+                      height="100"
                       src={LOGOS["jsx lite"]}
                     />
                   </div>
@@ -267,9 +282,18 @@ export function GetApp(props: {
               </Show>
               <Show when={outputTab !== "builder" && outputTab !== "jsx lite"}>
                 <div className="m-auto font-mono">
+                  <Show when={(LOGOS as any)[outputTab]}>
+                    <div className="pb-6 mx-auto text-center mb-4">
+                      <Image
+                        className="object-contain"
+                        width="auto"
+                        height="100"
+                        src={(LOGOS as any)[outputTab]}
+                      />
+                    </div>
+                  </Show>
                   <div>
-                    Copy and paste this code into your project. <br />
-                    <br /> Edit as desired.
+                    Copy and paste this code into your project and edit as desired.
                   </div>
                   <div className="py-10">- Or -</div>
                   <div
