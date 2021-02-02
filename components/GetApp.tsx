@@ -211,9 +211,9 @@ export function GetApp(props: {
           );
         })}
       </nav>
-      <div className="grid grid-cols-2 gap-4">
-        <div>How to</div>
-        <div className="m-6">
+      <div className="grid grid-cols-6 gap-4">
+        <div className="col-span-2">How to</div>
+        <div className="m-6 col-span-4">
           <MonacoEditor
             theme="vs-dark"
             language={
