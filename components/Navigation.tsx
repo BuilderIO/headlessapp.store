@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import ActiveLink from "./ActiveLink";
 
 // Turn on when launched. Until then users can't easily find and navigate the list
@@ -7,6 +8,7 @@ import ActiveLink from "./ActiveLink";
 const SHOW_DISCOVER_LINK = false;
 
 const Navigation = () => {
+  const router = useRouter();
   return (
     <nav className="mx-auto p-4 full-width bg-gradient-to-br from-dark to-primary">
       <div className="flex flex-wrap items-center text-white container mx-auto">
@@ -22,7 +24,15 @@ const Navigation = () => {
           </nav>
         </div>
         <Link href="/">
-          <a className="text-xl">
+          <a
+            className="text-xl"
+            onClick={(e) => {
+              if (location.hostname === "localhost") {
+                e.preventDefault();
+                router.push("/discover");
+              }
+            }}
+          >
             <Image
               className="object-contain object-center"
               width="332"

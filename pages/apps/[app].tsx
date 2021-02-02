@@ -34,14 +34,14 @@ const AppPage = ({ app, errors }: Props) => {
         }
       `}</style>
 
-      <div className="p-16 bg-white shadow-md full-width pb-0">
-        <div className="container mx-auto">
+      <div className="bg-white shadow-md full-width">
+        <div className="container mx-auto py-16">
           <div className="flex">
             <img
               src={app?.data.image}
-              className="w-60 h-40 rounded bg-white mr-20 self-center object-contain object-center shadow-lg"
+              className="w-96 h-80 rounded bg-white mr-20 self-center object-contain object-center shadow-lg p-6"
             />
-            <div>
+            <div className="my-auto">
               <h2 className="text-6xl">{app?.data.title}</h2>
               <p className="text-gray-700 mt-6">{app?.data.subtitle}</p>
 

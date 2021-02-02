@@ -160,10 +160,10 @@ export function GetApp(props: {
         </div>
       </div>
       <div className="bg-gradient-to-br from-dark to-primary-dark full-width shadow-md text-white">
-        <div className="m-auto container w-full flex flex-col">
+        <div className="m-auto container w-full flex flex-col pb-16">
           <nav
             id="get-app-code"
-            className="flex flex-col sm:flex-row overflow-auto justify-center rounded-full bg-dark shadow-lg mx-auto mt-10 border-black border-opacity-30 border-2"
+            className="flex flex-col sm:flex-row overflow-auto justify-center rounded-full bg-dark shadow-lg mx-auto mt-10 mb-6 border-black border-opacity-30 border-2"
           >
             {[
               "Builder",
@@ -287,6 +287,7 @@ export function GetApp(props: {
                   style={{ height: "50vh" }}
                   muted
                   autoPlay
+                  loop
                   className="shadow-lg rounded bg-dark"
                 >
                   <source

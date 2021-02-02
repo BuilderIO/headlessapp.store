@@ -8,23 +8,22 @@ const GridItem = ({ app }: { app: AppInfo }) => {
   const logo = app.data.image;
   return (
     <Link href={`/apps/${app.data.handle}`}>
-      <a className="p-8 rounded relative shadow group overflow-hidden md:py-16 text-center transition duration-150 ease-in-out">
+      <a className="p-8 rounded relative shadow group overflow-hidden text-center transition duration-150 ease-in-out bg-white">
         <div className="relative z-10">
           <div className="mb-4">
             {logo ? (
               <img
-                src=""
-                className="inline-block"
-                style={{ maxWidth: 200, maxHeight: 50 }}
+                src={app.data.image}
+                className="object-center object-contain p-6"
+                style={{ width: "100%", height: 140 }}
               />
             ) : null}
           </div>
 
-          <div>
+          <div className="mt-12">
             <h3 className="text-xl leading-7 font-semibold ">
               {app.data.title}
             </h3>
-            <p className="mt-1  text-sm leading-6">{app.data.subtitle}</p>
           </div>
         </div>
       </a>
