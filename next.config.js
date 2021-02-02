@@ -5,6 +5,9 @@ const withTM = require("next-transpile-modules")([
 ]);
 
 module.exports = withPlugins([withTM], {
+  images: {
+    domains: ["cdn.builder.io"],
+  },
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `fs` module
     if (!isServer) {
