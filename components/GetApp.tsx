@@ -160,10 +160,10 @@ export function GetApp(props: {
         </div>
       </div>
       <div className="bg-gradient-to-br from-dark to-primary-dark full-width shadow-md text-white">
-        <div className="m-auto container w-full">
+        <div className="m-auto container w-full flex flex-col">
           <nav
             id="get-app-code"
-            className="flex flex-col sm:flex-row overflow-auto justify-center"
+            className="flex flex-col sm:flex-row overflow-auto justify-center rounded-full bg-dark shadow-lg mx-auto mt-10 border-black border-opacity-30 border-2"
           >
             {[
               "Builder",
@@ -185,10 +185,8 @@ export function GetApp(props: {
                   onClick={() => {
                     setOutputTab(lowerName);
                   }}
-                  className={`text-white whitespace-nowrap py-4 px-6 block hover:text-primary-light focus:outline-none ${
-                    isActive
-                      ? "text-primary-light border-b-2 font-medium border-primary-light"
-                      : ""
+                  className={`text-white text-xs tracking-widest font-bold uppercase  whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
+                    isActive ? "bg-primary font-medium text-white" : ""
                   }`}
                 >
                   {name}
@@ -196,11 +194,48 @@ export function GetApp(props: {
               );
             })}
           </nav>
-          <div className="grid grid-cols-6 gap-4">
+          <div className="grid grid-cols-6 gap-16">
             <div className="col-span-2 text-white flex flex-col">
-              <div className="m-auto font-mono">
-                Copy and paste this code into your project. Edit as needed.
-              </div>
+              <Show when={outputTab === "builder"}>
+                <div className="m-auto">
+                  <div>
+                    Visually install, edit, a/b test, personalize, and publish
+                    this app remotely with Builder.io. <br />
+                    <br />
+                    No more copy and pasting or site deploys just to update
+                    layouts and copy
+                  </div>
+                  <a
+                    target="_blank"
+                    rel="noopenner"
+                    href={`https://builder.io/login?installHasApp=${app.id}`}
+                    className="font-sans text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded cursor-pointer mt-8"
+                  >
+                    Install with Builder.io
+                  </a>
+                </div>
+              </Show>
+              <Show when={outputTab === "jsx lite"}>
+                <div className="m-auto font-mono">
+                  Edit the code to the right to update all of the generated code
+                  in the other tabs!
+                </div>
+              </Show>
+              <Show when={outputTab !== "builder" && outputTab !== "jsx lite"}>
+                <div className="m-auto font-mono">
+                  <div>
+                    Copy and paste this code into your project. <br />
+                    <br /> Edit as desired.
+                  </div>
+                  <div className="py-10">- Or -</div>
+                  <div
+                    onClick={() => setOutputTab("builder")}
+                    className="font-sans text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded cursor-pointer"
+                  >
+                    Install with one click in Builder.io
+                  </div>
+                </div>
+              </Show>
             </div>
             <div className="m-6 col-span-4">
               {outputTab === "react" && (
@@ -247,51 +282,65 @@ export function GetApp(props: {
                   </div>
                 </div>
               )}
-              <MonacoEditor
-                theme="vs-dark"
-                language={
-                  outputTab === "swift"
-                    ? "swift"
-                    : outputTab === "json" || outputTab === "builder"
-                    ? "json"
-                    : outputTab === "react" ||
-                      outputTab === "jsx lite" ||
-                      outputTab === "react native" ||
-                      outputTab === "angular" ||
-                      outputTab === "webcomponents" ||
-                      outputTab === "solid"
-                    ? "typescript"
-                    : "html"
-                }
-                height="50vh"
-                className="bg-dark rounded pt-2 shadow-lg"
-                onChange={(_event, value) => {
-                  setCode(value || "");
-                }}
-                options={{
-                  readOnly: outputTab !== "jsx lite",
-                  minimap: { enabled: false },
-                }}
-                value={output}
-              />
-              <div className="text-center mt-4">
-                {outputTab === "jsx lite" ? (
-                  <>
-                    Edit the code above to update the preview and generate code!
-                  </>
-                ) : (
-                  <>
-                    Code generated by{" "}
-                    <a
-                      target="_blank"
-                      className="text-primary-light font-bold"
-                      href="https://github.com/builderio/jsx-lite"
-                    >
-                      JSX Lite
-                    </a>
-                  </>
-                )}
-              </div>
+              {outputTab === "builder" && (
+                <video
+                  style={{ height: "50vh" }}
+                  muted
+                  autoPlay
+                  className="shadow-lg rounded bg-dark"
+                >
+                  <source
+                    type="video/mp4"
+                    src="https://cdn.builder.io/o/assets%2FYJIGb4i01jvw0SRdL5Bt%2F3e6c8c72d2cd416cb04450e498962049?alt=media&token=b17aa0d5-525c-49b0-b806-3e58503df0b9&apiKey=YJIGb4i01jvw0SRdL5Bt"
+                  />
+                </video>
+              )}
+              {outputTab !== "builder" && (
+                <>
+                  <MonacoEditor
+                    theme="vs-dark"
+                    language={
+                      outputTab === "swift"
+                        ? "swift"
+                        : outputTab === "json" || outputTab === "builder"
+                        ? "json"
+                        : outputTab === "react" ||
+                          outputTab === "jsx lite" ||
+                          outputTab === "react native" ||
+                          outputTab === "angular" ||
+                          outputTab === "webcomponents" ||
+                          outputTab === "solid"
+                        ? "typescript"
+                        : "html"
+                    }
+                    height="50vh"
+                    className="bg-dark rounded pt-2 shadow-lg"
+                    onChange={(_event, value) => {
+                      setCode(value || "");
+                    }}
+                    options={{
+                      readOnly: outputTab !== "jsx lite",
+                      minimap: { enabled: false },
+                    }}
+                    value={output}
+                  />
+
+                  <div className="text-center mt-4">
+                    {outputTab === "jsx lite" ? null : (
+                      <>
+                        Code generated by{" "}
+                        <a
+                          target="_blank"
+                          className="text-primary-light font-bold"
+                          href="https://github.com/builderio/jsx-lite"
+                        >
+                          JSX Lite
+                        </a>
+                      </>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 export type AppInfo = {
+  id: string;
   data: {
     handle: string;
     title: string;
