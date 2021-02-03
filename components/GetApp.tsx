@@ -243,14 +243,19 @@ export function GetApp(props: {
                     Visually install, edit, personalize, and publish this app
                     remotely with Builder.io.
                   </div>
-                  <a
-                    target="_blank"
-                    rel="noopenner"
-                    href={`https://builder.io/login?installHasApp=${app.id}`}
+                  <div
+                    onClick={() => {
+                      const url = `${
+                        window.location.hostname === "localhost"
+                          ? "http://localhost:1234"
+                          : "https://builder.io"
+                      }/login?installHASApp=${app.id}:${props.activeTemplate}}`;
+                      open(url, "_blank", "noopener");
+                    }}
                     className="font-sans text-center text-offwhite block px-6 py-4 border-offwhite border-2 rounded cursor-pointer mt-8"
                   >
                     Install with Builder.io
-                  </a>
+                  </div>
                   <a
                     onClick={props.onShowBuilderDrawer}
                     className="text-center text-offwhite block px-6 py-2 border-offwhite opacity-70 rounded mt-4 cursor-pointer"

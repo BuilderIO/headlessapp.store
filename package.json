@@ -18,7 +18,7 @@
     "babel-plugin-inline-react-svg": "^1.1.2",
     "monaco-editor": "^0.21.2",
     "monaco-editor-webpack-plugin": "^2.0.0",
-    "next": "latest",
+    "next": "^10.0.3",
     "next-compose-plugins": "^2.2.1",
     "next-seo": "^4.17.0",
     "next-transpile-modules": "^6.0.0",
