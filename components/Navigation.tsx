@@ -44,7 +44,7 @@ const Navigation = () => {
         <div className="hidden md:flex md:items-center md:text-right px-6 md:flex-1 justify-end">
           <a
             target="_blank"
-            href="mailto:goheadless@builder.io"
+            href="mailto:has-partners@builder.io"
             className="px-3 py-1.5 text-sm rounded opacity-75 hover:text-black font-medium inline-flex items-center"
           >
             <span>Request</span>
