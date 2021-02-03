@@ -36,12 +36,12 @@ const AppPage = ({ app, errors }: Props) => {
 
       <div className="bg-white shadow-md full-width">
         <div className="container mx-auto py-16">
-          <div className="flex">
+          <div className="flex flex-col lg:flex-row">
             <img
               src={app?.data.image}
-              className="w-96 h-80 rounded-xl bg-white mr-20 self-center object-contain object-center shadow-lg p-6"
+              className="w-96 h-80 rounded-xl bg-white lg:mr-20 self-center object-contain object-center shadow-lg p-6 m-auto lg:m-0"
             />
-            <div className="my-auto">
+            <div className="my-auto text-center lg:text-left mt-12 lg:mt-0">
               <h2 className="text-6xl">{app?.data.title}</h2>
               <p className="text-gray-700 mt-6 text-xl">{app?.data.subtitle}</p>
 

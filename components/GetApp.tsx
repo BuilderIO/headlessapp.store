@@ -171,7 +171,7 @@ export function GetApp(props: {
     <div>
       <div>
         <div
-          className="bg-offwhite p-15"
+          className="bg-offwhite px-5 py-15 lg:px-15 full-width"
           style={{
             maxHeight: "70vh",
             minHeight: "200px",
@@ -187,7 +187,10 @@ export function GetApp(props: {
         <div className="m-auto container w-full flex flex-col pb-16">
           <nav
             id="get-app-code"
-            className="flex flex-col sm:flex-row overflow-auto justify-center rounded-full bg-dark shadow-lg mx-auto mt-10 mb-6 border-black border-opacity-30 border-2"
+            style={{
+              maxWidth: "100%",
+            }}
+            className="flex flex-row overflow-auto md:justify-center rounded-full bg-dark shadow-lg mx-auto mt-10 mb-6 border-black border-opacity-30 border-2"
           >
             {[
               "Builder",
@@ -225,7 +228,7 @@ export function GetApp(props: {
             })}
           </nav>
           <div className="grid grid-cols-6 gap-16">
-            <div className="col-span-2 text-white flex flex-col">
+            <div className="col-span-6 lg:col-span-2 text-white flex flex-col">
               <Show when={outputTab === "builder"}>
                 <div className="m-auto flex flex-col items-stretch text-center">
                   <div className="pb-6 mx-auto text-center mb-4">
@@ -237,8 +240,8 @@ export function GetApp(props: {
                     />
                   </div>
                   <div className="text-lg pb-4">
-                    Visually install, edit, personalize, and publish
-                    this app remotely with Builder.io.
+                    Visually install, edit, personalize, and publish this app
+                    remotely with Builder.io.
                   </div>
                   <a
                     target="_blank"
@@ -306,7 +309,7 @@ export function GetApp(props: {
                 </div>
               </Show>
             </div>
-            <div className="m-6 col-span-4">
+            <div className="m-6 col-span-6 lg:col-span-4">
               {outputTab === "react" && (
                 <div className="grid grid-cols-2 gap-4 pb-4">
                   <div>
