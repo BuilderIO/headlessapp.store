@@ -70,7 +70,7 @@ const AppPage = ({ app, errors }: Props) => {
           </div>
         </div>
 
-        <nav className="flex justify-center flex-col sm:flex-row overflow-auto mt-16">
+        <nav className="flex justify-center flex-col sm:flex-row overflow-auto mt-14">
           {app?.data.templates?.map(({ name }, index) => {
             const isActive = index === activeTemplate;
             return (

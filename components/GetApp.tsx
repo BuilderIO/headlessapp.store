@@ -237,7 +237,7 @@ export function GetApp(props: {
                     />
                   </div>
                   <div className="text-lg pb-4">
-                    Visually install, edit, a/b test, personalize, and publish
+                    Visually install, edit, personalize, and publish
                     this app remotely with Builder.io.
                   </div>
                   <a
@@ -293,7 +293,8 @@ export function GetApp(props: {
                     </div>
                   </Show>
                   <div>
-                    Copy and paste this code into your project and edit as desired.
+                    Copy and paste this code into your project and edit as
+                    desired.
                   </div>
                   <div className="py-10">- Or -</div>
                   <div
@@ -452,6 +453,15 @@ export function GetApp(props: {
             <div className="absolute top-0 right-0 left-0 bg-offwhite text-center border-b border-gray-80">
               <div className="p-4 font-bold uppercase tracking-widest">
                 Edit in Builder.io
+              </div>
+              <div
+                className="absolute top-3 z-10 right-4 text-2xl opacity-40 cursor-pointer"
+                onClick={() => props.onCloseDrawer()}
+                style={{
+                  transform: "rotateZ(45deg)",
+                }}
+              >
+                +
               </div>
             </div>
             <BuilderEditor
