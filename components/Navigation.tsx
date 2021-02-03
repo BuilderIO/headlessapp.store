@@ -25,7 +25,7 @@ const Navigation = () => {
         </div>
         <Link href="/">
           <a
-            className="text-xl"
+            className="text-xl mx-auto md:mx-0"
             onClick={(e) => {
               if (location.hostname === "localhost") {
                 e.preventDefault();
