@@ -249,7 +249,7 @@ export function GetApp(props: {
                         window.location.hostname === "localhost"
                           ? "http://localhost:1234"
                           : "https://builder.io"
-                      }/login?installHASApp=${app.id}:${props.activeTemplate}}`;
+                      }/login?installHASApp=${app.id}:${props.activeTemplate}`;
                       open(url, "_blank", "noopener");
                     }}
                     className="font-sans text-center text-offwhite block px-6 py-4 border-offwhite border-2 rounded cursor-pointer mt-8"
