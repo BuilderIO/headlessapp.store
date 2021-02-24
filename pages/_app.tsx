@@ -1,6 +1,7 @@
 import builder from "@builder.io/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import "@builder.io/widgets";
 
 Error.stackTraceLimit = 1000;
 
