@@ -1,7 +1,27 @@
-import builder from "@builder.io/react";
+import builder, { Builder } from "@builder.io/react";
 import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import "@builder.io/widgets";
+import { tabsConfig } from "@builder.io/widgets/dist/lib/components/Tabs.config";
+import { accordionConfig } from "@builder.io/widgets/dist/lib/components/Accordion.config";
+
+Builder.registerComponent(
+  dynamic(() =>
+    import("@builder.io/widgets/dist/lib/components/Tabs").then(
+      (mod) => mod.TabsComponent
+    )
+  ),
+  tabsConfig
+);
+
+Builder.registerComponent(
+  dynamic(() =>
+    import("@builder.io/widgets/dist/lib/components/Accordion").then(
+      (mod) => mod.AccordionComponent
+    )
+  ),
+  accordionConfig
+);
 
 Error.stackTraceLimit = 1000;
 
