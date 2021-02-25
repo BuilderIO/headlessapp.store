@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@builder.io/react": "^1.1.32-alpha.11",
+    "@builder.io/widgets": "^1.2.19",
     "@jsx-lite/core": "0.0.4-36",
     "@monaco-editor/react": "^3.7.1",
     "@tailwindcss/typography": "^0.3.1",

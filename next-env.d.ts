@@ -10,3 +10,6 @@ declare global {
     }
   }
 }
+
+// Nested types need a fix
+declare module "@builder.io/widgets/*";
