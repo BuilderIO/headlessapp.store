@@ -1,5 +1,6 @@
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 const withPlugins = require("next-compose-plugins");
+const path = require("path");
 const withTM = require("next-transpile-modules")([
   // "monaco-editor"
 ]);
@@ -19,6 +20,11 @@ module.exports = withPlugins([withTM], {
         fs: "empty",
       };
     }
+
+    config.resolve.alias.semver = path.resolve(
+      process.cwd(),
+      "node_modules/semver"
+    );
 
     config.plugins.push(new MonacoWebpackPlugin());
 
