@@ -180,6 +180,7 @@ export function GetApp(props: {
         >
           <Show when={builderJson}>
             <BuilderComponent
+              data={app?.data?.defaultInputValues || {}}
               key={props.activeTemplate}
               content={builderJson}
             />

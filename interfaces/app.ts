@@ -9,5 +9,6 @@ export type AppInfo = {
       code: string;
       name: string;
     }[];
+    defaultInputValues: { key: string; value: string };
   };
 };
