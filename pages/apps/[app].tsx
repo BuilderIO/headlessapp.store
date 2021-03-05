@@ -1,4 +1,4 @@
-import builder, { BuilderComponent } from "@builder.io/react";
+import builder, { BuilderComponent, BuilderContent } from "@builder.io/react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React, { useState } from "react";
 import { GetApp } from "../../components/GetApp";
@@ -27,82 +27,92 @@ const AppPage = ({ app, errors }: Props) => {
   }
 
   return (
-    <Layout title={`${app?.data?.title || ""} | HeadlessApp.Store`}>
-      <style>{`
+    <BuilderContent modelName="app" content={app as any}>
+      {(_data, _loading, app) => (
+        <>
+          <Layout title={`${app?.data?.title || ""} | HeadlessApp.Store`}>
+            <style>{`
         .monaco-editor .margin, .monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input {
           background-color: transparent !important;
         }
       `}</style>
 
-      <div className="bg-white shadow-md full-width">
-        <div className="container mx-auto py-16">
-          <div className="flex flex-col lg:flex-row">
-            <img
-              src={app?.data.image}
-              className="w-96 h-80 rounded-xl bg-white lg:mr-20 self-center object-contain object-center shadow-lg p-6 m-auto lg:m-0"
-            />
-            <div className="my-auto text-center lg:text-left mt-12 lg:mt-0">
-              <h2 className="text-6xl">{app?.data.title}</h2>
-              <p className="text-gray-700 mt-6 text-xl">{app?.data.subtitle}</p>
+            <div className="bg-white shadow-md full-width">
+              <div className="container mx-auto py-16">
+                <div className="flex flex-col lg:flex-row">
+                  <img
+                    src={app?.data.image}
+                    className="w-96 h-80 rounded-xl bg-white lg:mr-20 self-center object-contain object-center shadow-lg p-6 m-auto lg:m-0"
+                  />
+                  <div className="my-auto text-center lg:text-left mt-12 lg:mt-0">
+                    <h2 className="text-6xl">{app?.data.title}</h2>
+                    <p className="text-gray-700 mt-6 text-xl">
+                      {app?.data.subtitle}
+                    </p>
 
-              <div className="flex-row mt-10">
-                <a
-                  onClick={() => {
-                    document.getElementById("get-app-code")?.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                  }}
-                  className="bg-gradient-to-r from-dark to-primary rounded-full text-white font-semibold py-6 px-10 cursor-pointer uppercase tracking-widest"
-                >
-                  Get app
-                </a>
-                <button
-                  className="border-primary border-2 rounded-full text-primary font-semibold py-3 px-6 cursor-pointer uppercase tracking-widest ml-6"
-                  onClick={() => {
-                    setShowBuilderDrawer(true);
-                  }}
-                >
-                  Customize
-                </button>
+                    <div className="flex-row mt-10">
+                      <a
+                        onClick={() => {
+                          document
+                            .getElementById("get-app-code")
+                            ?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                        }}
+                        className="bg-gradient-to-r from-dark to-primary rounded-full text-white font-semibold py-6 px-10 cursor-pointer uppercase tracking-widest"
+                      >
+                        Get app
+                      </a>
+                      <button
+                        className="border-primary border-2 rounded-full text-primary font-semibold py-3 px-6 cursor-pointer uppercase tracking-widest ml-6"
+                        onClick={() => {
+                          setShowBuilderDrawer(true);
+                        }}
+                      >
+                        Customize
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <nav className="flex justify-center flex-col sm:flex-row overflow-auto">
+                {app?.data.templates?.map(({ name }, index) => {
+                  const isActive = index === activeTemplate;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setActiveTemplate(index);
+                      }}
+                      className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none uppercase tracking-widest font-bold ${
+                        isActive
+                          ? "text-primary border-b-2 font-medium border-primary"
+                          : ""
+                      }`}
+                    >
+                      {name}
+                    </button>
+                  );
+                })}
+              </nav>
             </div>
-          </div>
-        </div>
 
-        <nav className="flex justify-center flex-col sm:flex-row overflow-auto">
-          {app?.data.templates?.map(({ name }, index) => {
-            const isActive = index === activeTemplate;
-            return (
-              <button
-                key={index}
-                onClick={() => {
-                  setActiveTemplate(index);
-                }}
-                className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none uppercase tracking-widest font-bold ${
-                  isActive
-                    ? "text-primary border-b-2 font-medium border-primary"
-                    : ""
-                }`}
-              >
-                {name}
-              </button>
-            );
-          })}
-        </nav>
-      </div>
-
-      {app && (
-        <GetApp
-          activeTemplate={activeTemplate}
-          onCloseDrawer={() => setShowBuilderDrawer(false)}
-          showBuilderDrawer={showBuilderDrawer}
-          onShowBuilderDrawer={() => setShowBuilderDrawer(true)}
-          app={app}
-        />
+            {app && (
+              <GetApp
+                activeTemplate={activeTemplate}
+                onCloseDrawer={() => setShowBuilderDrawer(false)}
+                showBuilderDrawer={showBuilderDrawer}
+                onShowBuilderDrawer={() => setShowBuilderDrawer(true)}
+                app={app}
+              />
+            )}
+            <BuilderComponent model="app" content={app as any} />
+          </Layout>
+        </>
       )}
-      <BuilderComponent model="app" content={app as any} />
-    </Layout>
+    </BuilderContent>
   );
 };
 

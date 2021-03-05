@@ -179,7 +179,10 @@ export function GetApp(props: {
           }}
         >
           <Show when={builderJson}>
-            <BuilderComponent content={builderJson} />
+            <BuilderComponent
+              key={props.activeTemplate}
+              content={builderJson}
+            />
           </Show>
         </div>
       </div>
