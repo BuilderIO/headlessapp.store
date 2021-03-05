@@ -28,7 +28,7 @@ const AppPage = ({ app, errors }: Props) => {
 
   return (
     <BuilderContent modelName="app" content={app as any}>
-      {(_data, _loading, app) => (
+      {(_data, _loading, app: AppInfo) => (
         <>
           <Layout title={`${app?.data?.title || ""} | HeadlessApp.Store`}>
             <style>{`
