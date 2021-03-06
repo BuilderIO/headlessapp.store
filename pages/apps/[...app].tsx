@@ -37,7 +37,7 @@ const AppPage = ({
   useEffect(() => {
     window.history.replaceState(
       null,
-      {},
+      '',
       `/apps/${app?.data.handle}/${activeTemplate}`
     );
   }, [activeTemplate]);
