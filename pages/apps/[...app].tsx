@@ -1,6 +1,7 @@
 import builder, { BuilderComponent, BuilderContent } from "@builder.io/react";
+import { componentToBuilder, parseJsx } from "@jsx-lite/core";
 import { GetStaticPaths, GetStaticProps } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GetApp } from "../../components/GetApp";
 import Layout from "../../components/Layout";
 import { AppInfo } from "../../interfaces/app";
@@ -9,12 +10,19 @@ builder.init("c33bcd23c29e45789677ba9aaaa7ce1d");
 
 type Props = {
   app?: AppInfo;
+  initialBuilderJson?: BuilderComponent | null;
   errors?: string;
+  initialTemplate?: number;
 };
 
-const AppPage = ({ app, errors }: Props) => {
+const AppPage = ({
+  app,
+  errors,
+  initialBuilderJson,
+  initialTemplate,
+}: Props) => {
   const [showBuilderDrawer, setShowBuilderDrawer] = useState(false);
-  const [activeTemplate, setActiveTemplate] = useState(0);
+  const [activeTemplate, setActiveTemplate] = useState(initialTemplate || 0);
 
   if (errors) {
     return (
@@ -25,6 +33,14 @@ const AppPage = ({ app, errors }: Props) => {
       </Layout>
     );
   }
+
+  useEffect(() => {
+    window.history.replaceState(
+      null,
+      {},
+      `/apps/${app?.data.handle}/${activeTemplate}`
+    );
+  }, [activeTemplate]);
 
   return (
     <BuilderContent modelName="app" content={app as any}>
@@ -101,6 +117,7 @@ const AppPage = ({ app, errors }: Props) => {
 
             {app && (
               <GetApp
+                initialBuilderJson={initialBuilderJson}
                 activeTemplate={activeTemplate}
                 onCloseDrawer={() => setShowBuilderDrawer(false)}
                 showBuilderDrawer={showBuilderDrawer}
@@ -118,18 +135,33 @@ const AppPage = ({ app, errors }: Props) => {
 
 export default AppPage;
 
+const flatten = <T extends any>(arr: T[][]) =>
+  arr.reduce((memo, item) => {
+    return memo.concat(item);
+  }, [] as T[]);
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const results = await builder.getAll("app", {
     key: "apps:all",
-    fields: "data.handle",
+    fields: "data.handle,data.templates",
   });
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
   return {
     paths: results
-      .map((item) => ({ params: { app: item.data!.handle } }))
-      .concat([{ params: { app: "_" /* For previewing and editing */ } }]),
+      .map((item) => ({ params: { app: [item.data!.handle] } }))
+      .concat(
+        flatten(
+          results.map(
+            (item) =>
+              (item as AppInfo).data.templates.map((_template, index) => ({
+                params: { app: [item.data!.handle, String(index)] },
+              })) || []
+          )
+        )
+      )
+      .concat([{ params: { app: ["_"] /* For previewing and editing */ } }]),
     fallback: true,
   };
 };
@@ -138,12 +170,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // It won't be called on client-side, so you can even do
 // direct database queries.
 export const getStaticProps: GetStaticProps = async (context) => {
+  const path = context.params?.app || "";
+  let [handle, initialTemplate] =
+    typeof path === "string" ? path.split("/") : path;
   try {
     const data = await builder
       .get("app", {
         query: {
           // Get the specific article by handle
-          "data.handle": context.params!.app,
+          "data.handle": handle,
         },
         ...{
           options: {
@@ -152,9 +187,31 @@ export const getStaticProps: GetStaticProps = async (context) => {
         },
       })
       .promise();
-    // By returning { props: item }, the StaticPropsDetail component
-    // will receive `item` as a prop at build time
-    return { props: { app: JSON.parse(JSON.stringify(data)) }, revalidate: 1 };
+
+    let builderJson;
+    try {
+      const initialTemplateCode =
+        data?.data?.templates?.[initialTemplate]?.code;
+      builderJson = initialTemplateCode && {
+        id: "temp",
+        ...componentToBuilder(parseJsx(initialTemplateCode), {
+          includeIds: true,
+        }),
+      };
+    } catch (err) {
+      console.warn("Could not parse initial template", err);
+    }
+
+    return {
+      props: JSON.parse(
+        JSON.stringify({
+          app: data,
+          initialBuilderJson: builderJson,
+          initialTemplate: Number(initialTemplate) || 0,
+        })
+      ),
+      revalidate: 1,
+    };
   } catch (err) {
     return { props: { errors: err.message } };
   }

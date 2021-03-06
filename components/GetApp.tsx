@@ -82,6 +82,7 @@ export function GetApp(props: {
   showBuilderDrawer?: boolean;
   onCloseDrawer: () => void;
   activeTemplate?: number;
+  initialBuilderJson?: BuilderContent | null;
   onShowBuilderDrawer: () => void;
 }) {
   // For direct mutation without triggering a rerender (mostly for performance)
@@ -91,7 +92,9 @@ export function GetApp(props: {
   });
   const { app } = props;
   const [code, setCode] = useState("");
-  const [builderJson, setBuilderJson] = useState(null as any);
+  const [builderJson, setBuilderJson] = useState(
+    props.initialBuilderJson || null
+  );
   const [outputTab, setOutputTab] = useState("react");
   const [reactStateType, setReactStateType] = useState("useState");
   const [reactStyleType, setReactStyleType] = useState("styled-jsx");
@@ -124,7 +127,7 @@ export function GetApp(props: {
     const json = parseJsx(code);
     if (code && code !== privateState.lastCode) {
       const builderJson = componentToBuilder(json, { includeIds: true });
-      setBuilderJson(builderJson);
+      setBuilderJson(builderJson as BuilderComponent);
     }
     privateState.lastCode = code;
     try {
@@ -182,7 +185,7 @@ export function GetApp(props: {
             <BuilderComponent
               data={app?.data?.defaultInputValues || {}}
               key={props.activeTemplate}
-              content={builderJson}
+              content={builderJson as BuilderContent}
             />
           </Show>
         </div>
