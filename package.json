@@ -31,6 +31,7 @@
     "react-monaco-editor": "^0.40.0",
     "react-portal": "^4.2.1",
     "tailwindcss": "^2.0.1",
+    "use-typed-event-listener": "^3.0.0",
     "vscode": "^1.1.37",
     "webcomponents-in-react": "^1.0.1"
   },

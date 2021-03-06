@@ -1,5 +1,5 @@
 import builder, { BuilderComponent, BuilderContent } from "@builder.io/react";
-import { componentToBuilder, parseJsx } from "@jsx-lite/core";
+
 import { GetStaticPaths, GetStaticProps } from "next";
 import React, { useEffect, useState } from "react";
 import { GetApp } from "../../components/GetApp";
@@ -37,7 +37,7 @@ const AppPage = ({
   useEffect(() => {
     window.history.replaceState(
       null,
-      '',
+      "",
       `/apps/${app?.data.handle}/${activeTemplate}`
     );
   }, [activeTemplate]);
@@ -170,6 +170,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // It won't be called on client-side, so you can even do
 // direct database queries.
 export const getStaticProps: GetStaticProps = async (context) => {
+  const { componentToBuilder, parseJsx } = await import("@jsx-lite/core");
   const path = context.params?.app || "";
   let [handle, initialTemplate] =
     typeof path === "string" ? path.split("/") : path;

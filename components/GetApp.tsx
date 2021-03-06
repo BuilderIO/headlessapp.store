@@ -1,23 +1,6 @@
-import {
-  builderContentToJsxLiteComponent,
-  componentToAngular,
-  componentToBuilder,
-  componentToCustomElement,
-  componentToHtml,
-  componentToJsxLite,
-  componentToLiquid,
-  componentToReact,
-  componentToReactNative,
-  componentToSolid,
-  componentToSvelte,
-  componentToSwift,
-  componentToVue,
-  parseJsx,
-} from "@jsx-lite/core";
 import React from "react";
 import { useEffect, useState } from "react";
 import { AppInfo } from "../interfaces/app";
-import { ControlledEditor as MonacoEditor, monaco } from "@monaco-editor/react";
 import { Show } from "./show";
 import { Builder, BuilderComponent } from "@builder.io/react";
 import { BuilderContent } from "@builder.io/sdk";
@@ -25,6 +8,36 @@ import { adapt } from "webcomponents-in-react";
 import { Portal } from "react-portal";
 import { getQueryParam } from "./functions/get-query-param";
 import Image from "next/image";
+import useEventListener from "use-typed-event-listener";
+import dynamic from "next/dynamic";
+
+const MonacoEditor = dynamic(() =>
+  import("@monaco-editor/react").then((mod) => {
+    if (typeof window !== "undefined") {
+      mod.monaco.init().then((monaco) => {
+        monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+          target: monaco.languages.typescript.ScriptTarget.Latest,
+          allowNonTsExtensions: true,
+          moduleResolution:
+            monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+          module: monaco.languages.typescript.ModuleKind.CommonJS,
+          noEmit: true,
+          esModuleInterop: true,
+          jsx: monaco.languages.typescript.JsxEmit.React,
+          reactNamespace: "React",
+          allowJs: true,
+          typeRoots: ["node_modules/@types"],
+        });
+
+        monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+          noSemanticValidation: false,
+          noSyntaxValidation: false,
+        });
+      });
+    }
+    return mod.ControlledEditor as any;
+  })
+);
 
 const LOGOS = {
   builder:
@@ -49,28 +62,6 @@ const LOGOS = {
 
 const BuilderEditor = adapt("builder-editor");
 
-if (typeof window !== "undefined") {
-  monaco.init().then((monaco) => {
-    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-      target: monaco.languages.typescript.ScriptTarget.Latest,
-      allowNonTsExtensions: true,
-      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-      module: monaco.languages.typescript.ModuleKind.CommonJS,
-      noEmit: true,
-      esModuleInterop: true,
-      jsx: monaco.languages.typescript.JsxEmit.React,
-      reactNamespace: "React",
-      allowJs: true,
-      typeRoots: ["node_modules/@types"],
-    });
-
-    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-      noSemanticValidation: false,
-      noSyntaxValidation: false,
-    });
-  });
-}
-
 const builderOptions = {
   useDefaultStyles: false,
   hideAnimateTab: true,
@@ -85,6 +76,20 @@ export function GetApp(props: {
   initialBuilderJson?: BuilderContent | null;
   onShowBuilderDrawer: () => void;
 }) {
+  const [loadMonaco, setLoadMonaco] = useState(false);
+
+  useEventListener(
+    window,
+    "scroll",
+    () => {
+      setLoadMonaco(true);
+    },
+    {
+      once: true,
+      passive: true,
+    }
+  );
+
   // For direct mutation without triggering a rerender (mostly for performance)
   const [privateState] = useState({
     latestBuilderJson: null as null | BuilderContent,
@@ -112,6 +117,15 @@ export function GetApp(props: {
     }
     if (showBuilderDrawer) {
       privateState.latestBuilderJson = null;
+
+      const editorScriptId = "builder-editor-script";
+      if (!document.getElementById(editorScriptId)) {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://cdn.builder.io/js/editor";
+        script.id = editorScriptId;
+        document.body.appendChild(script);
+      }
     }
   }, [showBuilderDrawer, loadBuilder]);
 
@@ -121,54 +135,71 @@ export function GetApp(props: {
   }, [app?.data, props.activeTemplate]);
 
   useEffect(() => {
-    if (!code) {
+    if (!code || !loadMonaco) {
       return;
     }
-    const json = parseJsx(code);
-    if (code && code !== privateState.lastCode) {
-      const builderJson = componentToBuilder(json, { includeIds: true });
-      setBuilderJson(builderJson as BuilderComponent);
-    }
-    privateState.lastCode = code;
-    try {
-      setOutput(
-        outputTab === "liquid"
-          ? componentToLiquid(json)
-          : outputTab === "html"
-          ? componentToHtml(json)
-          : outputTab === "webcomponents"
-          ? componentToCustomElement(json)
-          : outputTab === "react"
-          ? componentToReact(json, {
-              stylesType: reactStyleType as any,
-              stateType: reactStateType as any,
-            })
-          : outputTab === "swift"
-          ? componentToSwift(json)
-          : outputTab === "react native"
-          ? componentToReactNative(json, {
-              stateType: reactStateType as any,
-            })
-          : outputTab === "solid"
-          ? componentToSolid(json)
-          : outputTab === "angular"
-          ? componentToAngular(json)
-          : outputTab === "svelte"
-          ? componentToSvelte(json, {
-              stateType: "variables",
-            })
-          : outputTab === "json"
-          ? JSON.stringify(json, null, 2)
-          : outputTab === "builder"
-          ? JSON.stringify(componentToBuilder(json), null, 2)
-          : outputTab === "jsx lite"
-          ? componentToJsxLite(json)
-          : componentToVue(json)
-      );
-    } catch (err) {
-      console.warn(err);
-    }
-  }, [code, outputTab, reactStateType, reactStyleType]);
+    (async () => {
+      const {
+        componentToAngular,
+        componentToBuilder,
+        componentToCustomElement,
+        componentToHtml,
+        componentToJsxLite,
+        componentToLiquid,
+        componentToReact,
+        componentToReactNative,
+        componentToSolid,
+        componentToSvelte,
+        componentToSwift,
+        componentToVue,
+        parseJsx,
+      } = await import("@jsx-lite/core");
+      const json = parseJsx(code);
+      if (code && code !== privateState.lastCode) {
+        const builderJson = componentToBuilder(json, { includeIds: true });
+        setBuilderJson(builderJson as BuilderComponent);
+      }
+      privateState.lastCode = code;
+      try {
+        setOutput(
+          outputTab === "liquid"
+            ? componentToLiquid(json)
+            : outputTab === "html"
+            ? componentToHtml(json)
+            : outputTab === "webcomponents"
+            ? componentToCustomElement(json)
+            : outputTab === "react"
+            ? componentToReact(json, {
+                stylesType: reactStyleType as any,
+                stateType: reactStateType as any,
+              })
+            : outputTab === "swift"
+            ? componentToSwift(json)
+            : outputTab === "react native"
+            ? componentToReactNative(json, {
+                stateType: reactStateType as any,
+              })
+            : outputTab === "solid"
+            ? componentToSolid(json)
+            : outputTab === "angular"
+            ? componentToAngular(json)
+            : outputTab === "svelte"
+            ? componentToSvelte(json, {
+                stateType: "variables",
+              })
+            : outputTab === "json"
+            ? JSON.stringify(json, null, 2)
+            : outputTab === "builder"
+            ? JSON.stringify(componentToBuilder(json), null, 2)
+            : outputTab === "jsx lite"
+            ? componentToJsxLite(json)
+            : componentToVue(json)
+        );
+      } catch (err) {
+        console.warn(err);
+      }
+    })();
+  }, [code, outputTab, reactStateType, reactStyleType, loadMonaco]);
 
   return (
     <div>
@@ -380,7 +411,7 @@ export function GetApp(props: {
                   />
                 </video>
               )}
-              {outputTab !== "builder" && (
+              {outputTab !== "builder" && loadMonaco && (
                 <>
                   <MonacoEditor
                     theme="vs-dark"
@@ -438,10 +469,14 @@ export function GetApp(props: {
             transition: "opacity 0.2s ease-in-out",
             pointerEvents: showBuilderDrawer ? "auto" : "none",
           }}
-          onClick={() => {
+          onClick={async () => {
             props.onCloseDrawer?.();
 
             if (privateState.latestBuilderJson) {
+              const {
+                componentToJsxLite,
+                builderContentToJsxLiteComponent,
+              } = await import("@jsx-lite/core");
               setCode(
                 componentToJsxLite(
                   builderContentToJsxLiteComponent(
