@@ -103,7 +103,7 @@ export function GetApp(props: {
   const [builderJson, setBuilderJson] = useState(
     props.initialBuilderJson || null
   );
-  const [outputTab, setOutputTab] = useState("react");
+  const [outputTab, setOutputTab] = useState("jsx lite");
   const [reactStateType, setReactStateType] = useState("useState");
   const [reactStyleType, setReactStyleType] = useState("styled-jsx");
   const [output, setOutput] = useState("");
@@ -139,6 +139,10 @@ export function GetApp(props: {
 
   useEffect(() => {
     if (!code || !loadMonaco) {
+      return;
+    }
+    if (outputTab === "jsx lite") {
+      setOutput(code);
       return;
     }
     (async () => {
