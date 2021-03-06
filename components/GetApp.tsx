@@ -10,8 +10,9 @@ import { getQueryParam } from "./functions/get-query-param";
 import Image from "next/image";
 import useEventListener from "use-typed-event-listener";
 import dynamic from "next/dynamic";
+import type { ControlledEditor } from "@monaco-editor/react";
 
-const MonacoEditor = dynamic(() =>
+const MonacoEditor: typeof ControlledEditor = dynamic(() =>
   import("@monaco-editor/react").then((mod) => {
     if (typeof window !== "undefined") {
       mod.monaco.init().then((monaco) => {
@@ -37,7 +38,7 @@ const MonacoEditor = dynamic(() =>
     }
     return mod.ControlledEditor as any;
   })
-);
+) as any;
 
 const LOGOS = {
   builder:
