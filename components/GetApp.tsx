@@ -78,17 +78,19 @@ export function GetApp(props: {
 }) {
   const [loadMonaco, setLoadMonaco] = useState(false);
 
-  useEventListener(
-    window,
-    "scroll",
-    () => {
-      setLoadMonaco(true);
-    },
-    {
-      once: true,
-      passive: true,
-    }
-  );
+  if (Builder.isBrowser) {
+    useEventListener(
+      window,
+      "scroll",
+      () => {
+        setLoadMonaco(true);
+      },
+      {
+        once: true,
+        passive: true,
+      }
+    );
+  }
 
   // For direct mutation without triggering a rerender (mostly for performance)
   const [privateState] = useState({
