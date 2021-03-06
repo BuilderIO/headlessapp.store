@@ -9,7 +9,8 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@builder.io/react": "^1.1.32-alpha.11",
+    "@builder.io/react": "^1.1.41",
+    "@builder.io/sdk": "^1.1.22",
     "@builder.io/widgets": "^1.2.19",
     "@jsx-lite/core": "0.0.19",
     "@monaco-editor/react": "^3.7.1",
