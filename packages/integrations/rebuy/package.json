@@ -1,0 +1,16 @@
+{
+  "name": "@headlessapp.store/rebuy",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    "./react/*": "./dist/react/*.js",
+    "./vue/*": "./dist/vue/*.js",
+    "./html/*": "./dist/html/*.js",
+    "./solid/*": "./dist/solid/*.js"
+  },
+  "dependencies": {
+    "@jsx-lite/core": "0.0.22"
+  }
+}
