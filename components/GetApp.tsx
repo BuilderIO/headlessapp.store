@@ -208,6 +208,13 @@ export function GetApp(props: {
     })();
   }, [code, outputTab, reactStateType, reactStyleType, loadMonaco]);
 
+  useEffect(() => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      // Large screen that has no room to scroll
+      setLoadMonaco(true);
+    }
+  }, []);
+
   return (
     <div>
       <div>
