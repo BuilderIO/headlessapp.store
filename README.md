@@ -23,7 +23,8 @@
   <img alt="Web Components" width="53" src="https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F5613cb3536be4c108b32c34bf06f1c59" />&nbsp;&nbsp;
   <img alt="Svelte" width="35" src="https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fe0e4a51fe67a418aabca3e5f3a814ebb" />&nbsp;&nbsp;
   <img alt="Solid" width="45" src="https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2F6c798824268443d49cf613e477bf5467" />&nbsp;&nbsp;
-  <img alt="HTML" width="45" src="https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fd9d7bf43281e42b2a6fad250fa6b5a55" />
+  <img alt="HTML" width="45" src="https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fd9d7bf43281e42b2a6fad250fa6b5a55" />&nbsp;&nbsp;&nbsp;
+  <img alt="Figma" width="31" src="https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2Ffb77e93c28e044178e4694cc939bf4cf" />
 </p>
 
 <br />
