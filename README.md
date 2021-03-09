@@ -36,6 +36,10 @@
 - Full server side (SSR) and static generated (SSG) support
 - 0 dependencies
 
+## Status
+
+Under active development. Request early access [here](mailto:has-invite@builder.io)
+
 <br />
 <br />
 <br />
