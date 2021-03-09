@@ -1,4 +1,5 @@
-export default {
+module.exports = {
   type: "library",
-  targets: ["react", "vue", "html", "svelte", "solid", "angular", "builder"],
+  files: 'src/*.ts',
+  targets: ["react", "vue", "html", "svelte", "solid", "angular", "builder", "webcomponents"],
 };
