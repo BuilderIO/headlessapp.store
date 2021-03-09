@@ -2,15 +2,18 @@
   "name": "@headlessapp.store/rebuy",
   "version": "0.0.1",
   "scripts": {
-    "build": "tsc"
+    "build": "jsx-lite build"
   },
   "exports": {
     "./react/*": "./dist/react/*.js",
     "./vue/*": "./dist/vue/*.js",
+    "./svelte/*": "./dist/svelte/*.js",
+    "./angular/*": "./dist/angular/*.js",
     "./html/*": "./dist/html/*.js",
     "./solid/*": "./dist/solid/*.js"
   },
   "dependencies": {
+    "@jsx-lite/cli": "0.0.1",
     "@jsx-lite/core": "0.0.22"
   }
 }

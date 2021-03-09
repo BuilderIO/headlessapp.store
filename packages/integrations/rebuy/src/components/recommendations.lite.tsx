@@ -35,7 +35,7 @@ export default function RecommendedProducts(props: RecommendedProductsProps) {
   const state = useState({
     loading: true,
     recommendedProducts: [] as any[],
-    onClickAddToCart(variantId) {
+    onClickAddToCart(variantId: string) {
       const formData = {
         items: [
           {
@@ -75,7 +75,7 @@ export default function RecommendedProducts(props: RecommendedProductsProps) {
         .then((res) => res.json())
         .then((data) => {
           state.loading = false;
-          const recommendedProducts = data?.data?.map((product) => {
+          const recommendedProducts = data?.data?.map((product: any) => {
             let reviewsAverage, reviewsCount;
 
             return {
