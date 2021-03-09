@@ -31,11 +31,14 @@
 
 ## Goals
 
-- High speed e-commerce integrations
+- Lightweight and high speed e-commerce integrations
 - Native support for popular frameworks via [JSX Lite](https://github.com/builderio/jsx-lite)
 - Full server side (SSR) and static generated (SSG) support
 - 0 dependencies
 
+<br />
+<br />
+<br />
 <br />
 
 <p align="center">
