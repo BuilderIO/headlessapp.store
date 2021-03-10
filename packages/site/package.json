@@ -1,5 +1,5 @@
 {
-  "name": "headlessapp.store",
+  "name": "@headlessapp.store/site",
   "homepage": "https://headlessapp.store",
   "version": "1.0.0",
   "scripts": {

@@ -1,0 +1,14 @@
+{
+  "name": "@headlessapp.store/tools",
+  "homepage": "https://headlessapp.store",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    "./*": "./dist/*"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}
