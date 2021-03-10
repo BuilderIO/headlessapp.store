@@ -172,7 +172,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { componentToBuilder, parseJsx } = await import("@jsx-lite/core");
   const path = context.params?.app || "";
-  let [handle, initialTemplate] =
+  let [handle, initialTemplate = 0] =
     typeof path === "string" ? path.split("/") : path;
   try {
     const data = await builder
@@ -202,6 +202,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     } catch (err) {
       console.warn("Could not parse initial template", err);
     }
+
+    console.log("builderJson", !!builderJson);
 
     return {
       props: JSON.parse(

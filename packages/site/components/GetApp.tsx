@@ -115,9 +115,6 @@ export function GetApp(props: {
   const { showBuilderDrawer } = props;
 
   useEffect(() => {
-    if (showBuilderDrawer && !loadBuilder) {
-      setLoadBuilder(true);
-    }
     if (showBuilderDrawer) {
       privateState.latestBuilderJson = null;
 
@@ -127,6 +124,9 @@ export function GetApp(props: {
         script.async = true;
         script.src = "https://cdn.builder.io/js/editor";
         script.id = editorScriptId;
+        script.onload = () => {
+          setLoadBuilder(true);
+        };
         document.body.appendChild(script);
       }
     }
