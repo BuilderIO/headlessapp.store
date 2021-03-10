@@ -42,7 +42,7 @@ const MonacoEditor: typeof ControlledEditor = dynamic(() =>
 
 const LOGOS = {
   builder:
-    "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Fb37b605163314875bd30995d7d3d7f88",
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F256484ef7be24bfba55633cdd810fe06",
   "jsx lite":
     "https://cdn.builder.io/api/v1/image/assets%2Fc33bcd23c29e45789677ba9aaaa7ce1d%2Ff028acdb0af4483a9d93433d30271c6c",
   react:
