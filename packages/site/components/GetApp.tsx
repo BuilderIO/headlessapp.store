@@ -11,6 +11,7 @@ import Image from "next/image";
 import useEventListener from "use-typed-event-listener";
 import dynamic from "next/dynamic";
 import type { ControlledEditor } from "@monaco-editor/react";
+import { useDebouncedCallback } from "use-debounce";
 
 const MonacoEditor: typeof ControlledEditor = dynamic(() =>
   import("@monaco-editor/react").then((mod) => {
@@ -113,6 +114,26 @@ export function GetApp(props: {
   const builderEnvParam = Builder.isBrowser && getQueryParam("builderEnv");
 
   const { showBuilderDrawer } = props;
+
+  const debouncedUpdateBuilderContent = useDebouncedCallback(
+    async () => {
+      const {
+        componentToBuilder,
+
+        parseJsx,
+      } = await import("@jsx-lite/core");
+      const json = parseJsx(code);
+      if (code && code !== privateState.lastCode) {
+        const builderJson = componentToBuilder(json, { includeIds: true });
+        setBuilderJson(builderJson as BuilderComponent);
+      }
+    },
+    800,
+    {
+      leading: false,
+      trailing: true,
+    }
+  );
 
   useEffect(() => {
     if (showBuilderDrawer) {
@@ -317,7 +338,7 @@ export function GetApp(props: {
                 </div>
               </Show>
               <Show when={outputTab === "jsx lite"}>
-                <div className="m-auto font-mono flex flex-col items-stretch text-center">
+                <div className="m-auto font-mono w-full flex flex-col items-stretch text-center">
                   <div className="pb-6 mx-auto text-center mb-4">
                     <Image
                       className="object-contain"
@@ -341,7 +362,7 @@ export function GetApp(props: {
                 </div>
               </Show>
               <Show when={outputTab !== "builder" && outputTab !== "jsx lite"}>
-                <div className="m-auto font-mono text-center">
+                <div className="m-auto font-mono text-center w-full">
                   <Show when={(LOGOS as any)[outputTab]}>
                     <div className="pb-6 mx-auto text-center mb-4">
                       <Image
@@ -352,11 +373,43 @@ export function GetApp(props: {
                       />
                     </div>
                   </Show>
+                  {[
+                    "angular",
+                    "vue",
+                    "react",
+                    "solid",
+                    "svelte",
+                    "webcomponents",
+                  ].includes(outputTab) && (
+                    <>
+                      <>
+                        <pre className="w-full overflow-auto rounded bg-black bg-opacity-10 py-2 px-4 my-2">
+                          npm install @headlessapp.store/{app.data.handle}
+                        </pre>
+                        {outputTab === "webcomponents" ? (
+                          <pre className="w-full overflow-auto rounded bg-black bg-opacity-10 py-2 px-4 my-2">
+                            import '@headlessapp.store/{app.data.handle}/
+                            {outputTab}'
+                          </pre>
+                        ) : (
+                          <pre className="w-full overflow-auto rounded bg-black bg-opacity-10 py-2 px-4 my-2">
+                            import{" "}
+                            {`{ ${app?.data.templates?.[
+                              props.activeTemplate!
+                            ]?.name?.replace(/\s+/g, "")} }`}{" "}
+                            from '@headlessapp.store/{app.data.handle}/
+                            {outputTab}'
+                          </pre>
+                        )}
+                        <div className="py-5">- Or -</div>
+                      </>
+                    </>
+                  )}
                   <div>
                     Copy and paste this code into your project and edit as
                     desired.
                   </div>
-                  <div className="py-10">- Or -</div>
+                  <div className="py-5">- Or -</div>
                   <div
                     onClick={() => setOutputTab("builder")}
                     className="font-sans text-center text-offwhite block mx-auto px-6 py-4 border-offwhite border-2 rounded cursor-pointer"
@@ -447,6 +500,7 @@ export function GetApp(props: {
                     className="bg-dark rounded pt-2 shadow-lg"
                     onChange={(_event, value) => {
                       setCode(value || "");
+                      debouncedUpdateBuilderContent();
                     }}
                     options={{
                       readOnly: outputTab !== "jsx lite",
