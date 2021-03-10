@@ -203,8 +203,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       console.warn("Could not parse initial template", err);
     }
 
-    console.log("builderJson", !!builderJson);
-
     return {
       props: JSON.parse(
         JSON.stringify({
