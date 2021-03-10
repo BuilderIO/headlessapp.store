@@ -41,6 +41,27 @@ const MonacoEditor: typeof ControlledEditor = dynamic(() =>
   })
 ) as any;
 
+const COLOR_THUMBNAILS = {
+  "jsx lite":
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2Fab5d07a1cf3442ada822e8006e6d895e",
+  react:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F2f3409f4f8b64d5f880195061aa481ab",
+  angular:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2Fa91e9e437203442d8ed481eef94a99dc",
+  vue:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F7cc6d5b6fc4045d5a9f9b12ddcc65407",
+  builder:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F6e350b2ded8f4e27ae82995d2973f701",
+  svelte:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2Fb1f9cfe4300f4d798e47a76fb00242fb",
+  solid:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F3783ae1694574af7a61e1f5a4f69b95b",
+  html:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F60768b21f7544ee989b4ca3526ab7040",
+  webcomponents:
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2Ffa0d5b6982d845a5a99540612b51e60d",
+};
+
 const LOGOS = {
   builder:
     "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F256484ef7be24bfba55633cdd810fe06",
@@ -263,7 +284,7 @@ export function GetApp(props: {
             style={{
               maxWidth: "100%",
             }}
-            className="flex flex-row overflow-auto md:justify-center rounded-full bg-dark shadow-lg mx-auto mt-10 mb-6 border-black border-opacity-30 border-2"
+            className="flex flex-row overflow-auto rounded-full mx-auto mt-10 mb-6"
           >
             {[
               "Builder",
@@ -279,23 +300,29 @@ export function GetApp(props: {
             ].map((name, index) => {
               const lowerName = name.toLowerCase();
               const isActive = lowerName === outputTab;
+              const thumbnail =
+                COLOR_THUMBNAILS[lowerName as keyof typeof COLOR_THUMBNAILS];
               return (
                 <button
                   key={index}
                   onClick={() => {
                     setOutputTab(lowerName);
                   }}
-                  className={` text-xs tracking-widest uppercase  whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
+                  className={`flex text-white items-center flex-col text-center text-xs tracking-widest uppercase flex-shrink-0 whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
                     isActive
-                      ? "bg-primary-light font-extrabold text-dark"
-                      : "bg-offwhite text-primary-dark font-bold"
-                  } ${
-                    lowerName === "jsx lite"
-                      ? " border-primary-dark border-r-2"
-                      : ""
+                      ? "font-bold border-b-2 border-white border-bottom"
+                      : "text-opacity-70"
                   }`}
                 >
-                  {name}
+                  {thumbnail && (
+                    <Image
+                      width="30"
+                      height="30"
+                      className="object-contain object-center mx-auto mb-2"
+                      src={thumbnail}
+                    />
+                  )}
+                  <div className="mt-2">{name}</div>
                 </button>
               );
             })}
@@ -347,6 +374,7 @@ export function GetApp(props: {
                       src={LOGOS["jsx lite"]}
                     />
                   </div>
+
                   <div>
                     Edit the code to the right to update all of the generated
                     code in the other tabs!
@@ -366,6 +394,7 @@ export function GetApp(props: {
                   <Show when={(LOGOS as any)[outputTab]}>
                     <div className="pb-6 mx-auto text-center mb-4">
                       <Image
+                        key={outputTab}
                         className="object-contain"
                         width="auto"
                         height="100"
