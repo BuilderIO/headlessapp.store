@@ -284,7 +284,7 @@ export function GetApp(props: {
             style={{
               maxWidth: "100%",
             }}
-            className="flex flex-row overflow-auto rounded-full mx-auto mt-10 mb-6"
+            className="flex flex-row overflow-auto mx-auto mt-10 mb-6"
           >
             {[
               "Builder",
