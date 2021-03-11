@@ -12,6 +12,8 @@ import useEventListener from "use-typed-event-listener";
 import dynamic from "next/dynamic";
 import type { ControlledEditor } from "@monaco-editor/react";
 import { useDebouncedCallback } from "use-debounce";
+import { Spinner } from "./Spinner";
+
 
 const MonacoEditor: typeof ControlledEditor = dynamic(() =>
   import("@monaco-editor/react").then((mod) => {
@@ -96,6 +98,7 @@ export function GetApp(props: {
   showBuilderDrawer?: boolean;
   onCloseDrawer: () => void;
   activeTemplate?: number;
+  tabInteracted?: boolean;
   initialBuilderJson?: BuilderContent | null;
   onShowBuilderDrawer: () => void;
 }) {
@@ -126,7 +129,9 @@ export function GetApp(props: {
     props.initialBuilderJson || null
   );
   const [outputTab, setOutputTab] = useState("jsx lite");
-  const [tabInteracted, setTabInteracted] = useState(false);
+  const [showLoading, setShowLoading] = useState(false)
+  const [jsxLiteLoaded, setJsxLiteLoaded] = useState(false)
+  
   const [reactStateType, setReactStateType] = useState("useState");
   const [reactStyleType, setReactStyleType] = useState("styled-jsx");
   const [output, setOutput] = useState("");
@@ -184,11 +189,14 @@ export function GetApp(props: {
     if (!code || !loadMonaco) {
       return;
     }
-    if (outputTab === "jsx lite" && !tabInteracted) {
+    if (outputTab === "jsx lite" && !props.tabInteracted) {
       setOutput(code);
       return;
     }
     (async () => {
+      if (!jsxLiteLoaded) {
+        setShowLoading(true)
+      }
       const {
         componentToAngular,
         componentToBuilder,
@@ -205,6 +213,8 @@ export function GetApp(props: {
         parseJsx,
       } = await import("@jsx-lite/core");
       const json = parseJsx(code);
+      setShowLoading(false)
+      setJsxLiteLoaded(true)
       if (code && code !== privateState.lastCode) {
         const builderJson = componentToBuilder(json, { includeIds: true });
         setBuilderJson(builderJson as BuilderComponent);
@@ -249,7 +259,7 @@ export function GetApp(props: {
         console.warn(err);
       }
     })();
-  }, [code, outputTab, reactStateType, reactStyleType, loadMonaco]);
+  }, [code, outputTab, reactStateType, reactStyleType, loadMonaco, props.tabInteracted]);
 
   useEffect(() => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -262,14 +272,18 @@ export function GetApp(props: {
     <div>
       <div>
         <div
-          className="bg-offwhite px-5 py-15 lg:px-15 full-width"
+          className="bg-offwhite px-5 py-15 lg:px-15 full-width overflow-auto"
           style={{
             maxHeight: "70vh",
             minHeight: "200px",
-            overflow: "auto",
           }}
         >
-          <Show when={builderJson}>
+          <Show when={showLoading}>
+            <div className="p-40 flex">
+              <Spinner className="m-auto" />
+            </div>
+          </Show>
+          <Show when={builderJson && !showLoading}>
             <BuilderComponent
               data={app?.data?.defaultInputValues || {}}
               key={props.activeTemplate}
@@ -308,7 +322,6 @@ export function GetApp(props: {
                   key={index}
                   onClick={() => {
                     setOutputTab(lowerName);
-                    setTabInteracted(true);
                   }}
                   className={`flex text-white items-center flex-col text-center text-xs tracking-widest uppercase flex-shrink-0 whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
                     isActive
@@ -596,26 +609,7 @@ export function GetApp(props: {
           className="bg-white p-12 shadow-2xl z-10 fixed bottom-0 left-0 right-0 top-1/6"
         >
           <div className="absolute top-0 left-0 items-center justify-center flex h-full w-full opacity-60">
-            <svg
-              className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
+            <Spinner />
           </div>
           <Show when={loadBuilder}>
             <div className="absolute top-0 right-0 left-0 bg-offwhite text-center border-b border-gray-80">

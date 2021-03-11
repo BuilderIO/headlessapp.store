@@ -23,6 +23,7 @@ const AppPage = ({
 }: Props) => {
   const [showBuilderDrawer, setShowBuilderDrawer] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState(initialTemplate || 0);
+  const [tabInteracted, setTabInteracted] = useState(false);
 
   if (errors) {
     return (
@@ -96,11 +97,13 @@ const AppPage = ({
               <nav className="flex justify-center flex-col sm:flex-row overflow-auto">
                 {app?.data.templates?.map(({ name }, index) => {
                   const isActive = index === activeTemplate;
+                  
                   return (
                     <button
                       key={index}
                       onClick={() => {
                         setActiveTemplate(index);
+                        setTabInteracted(true)
                       }}
                       className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none uppercase tracking-widest font-bold ${
                         isActive
@@ -117,6 +120,7 @@ const AppPage = ({
 
             {app && (
               <GetApp
+              tabInteracted={tabInteracted}
                 initialBuilderJson={initialBuilderJson}
                 activeTemplate={activeTemplate}
                 onCloseDrawer={() => setShowBuilderDrawer(false)}
