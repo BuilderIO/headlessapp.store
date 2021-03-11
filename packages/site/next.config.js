@@ -18,6 +18,11 @@ module.exports = withPlugins([withTM], {
     if (!isServer) {
       config.node = {
         fs: "empty",
+        module: "empty",
+      };
+    } else {
+      config.node = {
+        module: "empty",
       };
     }
 

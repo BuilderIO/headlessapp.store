@@ -126,6 +126,7 @@ export function GetApp(props: {
     props.initialBuilderJson || null
   );
   const [outputTab, setOutputTab] = useState("jsx lite");
+  const [tabInteracted, setTabInteracted] = useState(false);
   const [reactStateType, setReactStateType] = useState("useState");
   const [reactStyleType, setReactStyleType] = useState("styled-jsx");
   const [output, setOutput] = useState("");
@@ -183,7 +184,7 @@ export function GetApp(props: {
     if (!code || !loadMonaco) {
       return;
     }
-    if (outputTab === "jsx lite") {
+    if (outputTab === "jsx lite" && !tabInteracted) {
       setOutput(code);
       return;
     }
@@ -307,6 +308,7 @@ export function GetApp(props: {
                   key={index}
                   onClick={() => {
                     setOutputTab(lowerName);
+                    setTabInteracted(true);
                   }}
                   className={`flex text-white items-center flex-col text-center text-xs tracking-widest uppercase flex-shrink-0 whitespace-nowrap py-4 px-6 block hover:font-bold focus:outline-none ${
                     isActive
