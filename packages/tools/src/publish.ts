@@ -1,7 +1,5 @@
 export type PublishOptions = {
-  privateKey: string
-}
+  privateKey: string;
+};
 
-export async function publish() {
-
-}
+export async function publish() {}
