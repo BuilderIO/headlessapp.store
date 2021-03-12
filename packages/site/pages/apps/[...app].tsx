@@ -55,15 +55,15 @@ const AppPage = ({
       `}</style>
 
             <div className="bg-white shadow-md full-width">
-              <div className="container mx-auto py-16">
+              <div className="container py-16 mx-auto">
                 <div className="flex flex-col lg:flex-row">
                   <img
                     src={app?.data.image}
-                    className="w-96 h-80 rounded-xl bg-white lg:mr-20 self-center object-contain object-center shadow-lg p-6 m-auto lg:m-0"
+                    className="self-center object-contain object-center p-6 m-auto bg-white shadow-lg w-96 h-80 rounded-xl lg:mr-20 lg:m-0"
                   />
-                  <div className="my-auto text-center lg:text-left mt-12 lg:mt-0">
-                    <h2 className="text-6xl">{app?.data.title}</h2>
-                    <p className="text-gray-700 mt-6 text-xl">
+                  <div className="my-auto mt-12 text-center lg:text-left lg:mt-0">
+                    <h1 className="text-6xl">{app?.data.title}</h1>
+                    <p className="mt-6 text-xl text-gray-700">
                       {app?.data.subtitle}
                     </p>
 
@@ -77,12 +77,12 @@ const AppPage = ({
                               block: "start",
                             });
                         }}
-                        className="bg-gradient-to-r from-dark to-primary rounded-full text-white font-semibold py-6 px-10 cursor-pointer uppercase tracking-widest"
+                        className="px-10 py-6 font-semibold tracking-widest text-white uppercase rounded-full cursor-pointer bg-gradient-to-r from-dark to-primary"
                       >
                         Get app
                       </a>
                       <button
-                        className="border-primary border-2 rounded-full text-primary font-semibold py-3 px-6 cursor-pointer uppercase tracking-widest ml-6"
+                        className="px-6 py-3 ml-6 font-semibold tracking-widest uppercase border-2 rounded-full cursor-pointer border-primary text-primary"
                         onClick={() => {
                           setShowBuilderDrawer(true);
                         }}
@@ -94,16 +94,16 @@ const AppPage = ({
                 </div>
               </div>
 
-              <nav className="flex justify-center flex-col sm:flex-row overflow-auto">
+              <nav className="flex flex-col justify-center overflow-auto sm:flex-row">
                 {app?.data.templates?.map(({ name }, index) => {
                   const isActive = index === activeTemplate;
-                  
+
                   return (
                     <button
                       key={index}
                       onClick={() => {
                         setActiveTemplate(index);
-                        setTabInteracted(true)
+                        setTabInteracted(true);
                       }}
                       className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none uppercase tracking-widest font-bold ${
                         isActive
@@ -120,7 +120,7 @@ const AppPage = ({
 
             {app && (
               <GetApp
-              tabInteracted={tabInteracted}
+                tabInteracted={tabInteracted}
                 initialBuilderJson={initialBuilderJson}
                 activeTemplate={activeTemplate}
                 onCloseDrawer={() => setShowBuilderDrawer(false)}
