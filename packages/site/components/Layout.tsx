@@ -1,4 +1,6 @@
 import React, { ReactNode } from "react";
+import builder, { BuilderComponent, BuilderContent } from "@builder.io/react";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Navigation from "./Navigation";
 
@@ -8,6 +10,7 @@ type Props = {
   ogImage?: string;
   description?: string;
   hideHeaderAndFooter?: boolean;
+  footerContent?: BuilderContent;
 };
 
 const Layout = ({
@@ -16,6 +19,7 @@ const Layout = ({
   ogImage = "https://headlessapp.store/assets/new-one.png",
   description = "Request early access now",
   hideHeaderAndFooter = false,
+  footerContent
 }: Props) => (
   <div>
     <Head>
@@ -37,64 +41,23 @@ const Layout = ({
     )}
     {children}
     {!hideHeaderAndFooter && (
-      <footer className="text-center p-16">
-        <div className="text-lg">
-          Made with ❤️ by{" "}
-          <a
-            className="text-link"
-            target="_blank"
-            rel="nooppener"
-            href="https://www.builder.io"
-          >
-            Builder.io
-          </a>
-          .
-        </div>
-        <div className="mt-3">
-          Built with{" "}
-          <a className="text-link" href="https://www.builder.io">
-            Builder.io
-          </a>
-          ,{" "}
-          <a
-            className="text-link"
-            rel="nooppener"
-            target="_blank"
-            href="https://github.com/BuilderIO/jsx-lite"
-          >
-            JSX Lite
-          </a>
-          ,{" "}
-          <a
-            className="text-link"
-            rel="nooppener"
-            target="_blank"
-            href="https://github.com/vercel/next.js/"
-          >
-            Next.js
-          </a>
-          ,{" "}
-          <a
-            className="text-link"
-            rel="nooppener"
-            target="_blank"
-            href="https://github.com/tailwindlabs/tailwindcss"
-          >
-            TailwindCSS
-          </a>
-          . Hosted by{" "}
-          <a
-            className="text-link"
-            rel="nooppener"
-            target="_blank"
-            href="https://vercel.com/"
-          >
-            Vercel
-          </a>
-        </div>
+      <footer className="p-16 text-center">
+        <BuilderComponent content={footerContent} model="footer" />
       </footer>
     )}
   </div>
 );
+
+export const getStaticProps: GetStaticProps = async (context: any) => {
+  const footerContent: BuilderContent = await builder
+    .get("footer", { url: context.resolvedUrl })
+    .promise();
+
+  return {
+    props: { footerContent },
+    revalidate: true,
+    notFound: !footerContent
+  };
+};
 
 export default Layout;
