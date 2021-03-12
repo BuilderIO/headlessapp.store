@@ -97,13 +97,13 @@ const AppPage = ({
               <nav className="flex flex-col justify-center overflow-auto sm:flex-row">
                 {app?.data.templates?.map(({ name }, index) => {
                   const isActive = index === activeTemplate;
-                  
+
                   return (
                     <button
                       key={index}
                       onClick={() => {
                         setActiveTemplate(index);
-                        setTabInteracted(true)
+                        setTabInteracted(true);
                       }}
                       className={`whitespace-nowrap text-gray-600 py-4 px-6 block hover:text-primary focus:outline-none uppercase tracking-widest font-bold ${
                         isActive
@@ -120,7 +120,7 @@ const AppPage = ({
 
             {app && (
               <GetApp
-              tabInteracted={tabInteracted}
+                tabInteracted={tabInteracted}
                 initialBuilderJson={initialBuilderJson}
                 activeTemplate={activeTemplate}
                 onCloseDrawer={() => setShowBuilderDrawer(false)}
