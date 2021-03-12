@@ -62,7 +62,7 @@ const AppPage = ({
                     className="self-center object-contain object-center p-6 m-auto bg-white shadow-lg w-96 h-80 rounded-xl lg:mr-20 lg:m-0"
                   />
                   <div className="my-auto mt-12 text-center lg:text-left lg:mt-0">
-                    <h2 className="text-6xl">{app?.data.title}</h2>
+                    <h1 className="text-6xl">{app?.data.title}</h1>
                     <p className="mt-6 text-xl text-gray-700">
                       {app?.data.subtitle}
                     </p>
