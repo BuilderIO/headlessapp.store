@@ -5,7 +5,6 @@ import type { AppContext, AppProps } from 'next/app';
 import App from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { createContext } from 'react';
 import { LayoutContext } from '../context/layout';
 import '../styles/index.css';
 

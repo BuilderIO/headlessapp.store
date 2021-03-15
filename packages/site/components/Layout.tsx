@@ -1,4 +1,4 @@
-import { BuilderComponent, BuilderContent } from '@builder.io/react';
+import { BuilderComponent } from '@builder.io/react';
 import Head from 'next/head';
 import React, { ReactNode } from 'react';
 import { LayoutContext } from '../context/layout';
