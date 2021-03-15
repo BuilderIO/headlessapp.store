@@ -45,7 +45,7 @@ const MonacoEditor: typeof ControlledEditor = dynamic(() =>
 
 const COLOR_THUMBNAILS = {
   "jsx lite":
-    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F700ce1da4b5f4e709b70e0bc52713a38",
+    "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2Fbe57ce30e08b4c0c887ccaa0a7869d4a",
   react:
     "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F2f3409f4f8b64d5f880195061aa481ab",
   angular:
