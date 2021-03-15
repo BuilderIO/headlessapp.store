@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import builder, { BuilderComponent, BuilderContent } from "@builder.io/react";
-import { GetStaticProps } from "next";
-import Head from "next/head";
-import Navigation from "./Navigation";
+import { BuilderComponent } from '@builder.io/react';
+import Head from 'next/head';
+import React, { ReactNode } from 'react';
+import { LayoutContext } from '../context/layout';
+import Navigation from './Navigation';
 
 type Props = {
   children?: ReactNode;
@@ -10,16 +10,14 @@ type Props = {
   ogImage?: string;
   description?: string;
   hideHeaderAndFooter?: boolean;
-  footerContent?: BuilderContent;
 };
 
 const Layout = ({
   children,
-  title = "HeadlessApp.Store | Blazing fast ecommerce integrations",
-  ogImage = "https://headlessapp.store/assets/new-one.png",
-  description = "Request early access now",
+  title = 'HeadlessApp.Store | Blazing fast ecommerce integrations',
+  ogImage = 'https://headlessapp.store/assets/new-one.png',
+  description = 'Request early access now',
   hideHeaderAndFooter = false,
-  footerContent
 }: Props) => (
   <div>
     <Head>
@@ -41,23 +39,15 @@ const Layout = ({
     )}
     {children}
     {!hideHeaderAndFooter && (
-      <footer className="p-16 text-center">
-        <BuilderComponent content={footerContent} model="footer" />
-      </footer>
+      <LayoutContext.Consumer>
+        {({ footerContent }) => (
+          <footer className="p-16 text-center">
+            <BuilderComponent content={footerContent} model="footer" />
+          </footer>
+        )}
+      </LayoutContext.Consumer>
     )}
   </div>
 );
-
-export const getStaticProps: GetStaticProps = async (context: any) => {
-  const footerContent: BuilderContent = await builder
-    .get("footer", { url: context.resolvedUrl })
-    .promise();
-
-  return {
-    props: { footerContent },
-    revalidate: true,
-    notFound: !footerContent
-  };
-};
 
 export default Layout;
