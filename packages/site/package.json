@@ -12,7 +12,7 @@
     "@builder.io/react": "^1.1.42-0",
     "@builder.io/sdk": "^1.1.22",
     "@builder.io/widgets": "^1.2.19",
-    "@jsx-lite/core": "0.0.30",
+    "@jsx-lite/core": "0.0.31",
     "@monaco-editor/react": "^3.7.1",
     "@tailwindcss/typography": "^0.3.1",
     "@tailwindcss/ui": "^0.7.2",
