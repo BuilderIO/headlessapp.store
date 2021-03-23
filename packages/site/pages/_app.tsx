@@ -6,6 +6,8 @@ import App from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { LayoutContext } from '../context/layout';
+
+import '../styles/tailwind.css';
 import '../styles/index.css';
 
 Builder.registerComponent(

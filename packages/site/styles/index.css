@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .full-width {
   width: 100vw;
   position: relative;
@@ -13,4 +9,55 @@
 
 .text-link {
   @apply text-primary;
+}
+
+/* Rich editor reset */
+.builder-text {
+  /* Lists */
+  & ol,
+  & ul {
+    @apply list-disc;
+    @apply list-inside;
+
+    padding-left: 2rem;
+  }
+
+  /* Links */
+  & a {
+    @apply text-primary;
+  }
+
+  /* Headers */
+  & h1 {
+    @apply text-4xl;
+  }
+
+  & h2 {
+    @apply text-3xl;
+  }
+
+  & h3 {
+    @apply text-2xl;
+  }
+
+  & h4 {
+    @apply text-xl;
+  }
+
+  & h5 {
+    @apply text-lg;
+  }
+
+  & h6 {
+    @apply text-base;
+  }
+
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    font-weight: bold;
+  }
 }
